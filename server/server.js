@@ -8,13 +8,14 @@ import cors from "cors"
 // importing routes
 import auth_router from "./routes/auth_routes.js"
 import user_router from "./routes/user_routes.js"
+import business_router from "./routes/business_routes.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 8001;
 const MONGODB_URL = process.env.MONGODB_URL ;
 const app = express();
 const server = http.createServer(app);
-
+const { ObjectId } = mongoose.Types;
 // middlewares
 app.use(cors({origin : "*"}));
 app.use(express.json());
@@ -23,14 +24,17 @@ app.use(cookieParser());
 
 // routes
 app.use('/api/auth' , auth_router);
-app.use('/api/user' , user_router)
+app.use('/api/user' , user_router);
+app.use('/api/business' , business_router);
 
 // server & mongodb
 server.listen(PORT , () => {
     console.log(`server is running on the PORT ${PORT}`)
 });
 
-mongoose.connect(MONGODB_URL)
+mongoose.connect(MONGODB_URL,{
+    // connectTimeoutMS: 30000
+})
 .then(() => console.log("MongoDB is connected"))
 .catch((error) => console.log("MongoDB connection failed"))
 
