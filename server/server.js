@@ -7,7 +7,7 @@ import cors from "cors"
 
 // importing routes
 import auth_router from "./routes/auth_routes.js"
-
+import user_router from "./routes/user_routes.js"
 
 dotenv.config();
 const PORT = process.env.PORT || 8001;
@@ -23,7 +23,7 @@ app.use(cookieParser());
 
 // routes
 app.use('/api/auth' , auth_router);
-
+app.use('/api/user' , user_router)
 
 // server & mongodb
 server.listen(PORT , () => {
