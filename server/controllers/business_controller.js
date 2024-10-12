@@ -31,7 +31,7 @@ export const createBusiness = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success:"False",
-            message: "Error creating business",
+            message: "Error creating Resource",
             error: error.message
         });
     }
@@ -155,11 +155,11 @@ export const searchBusinesses = async (req, res) => {
 
         if (tags) {
             const tagsArray = tags.split(',').map(tag => tag.trim());
-            query.tags = { $in: tagsArray }; // Use $in to match any of the tags
+            query.tags = { $in: tagsArray }; 
         }
 
         if (name) {
-            query.name = { $regex: new RegExp(name, 'i') }; // Case-insensitive search
+            query.$text = { $search: name };  
         }
 
         const businesses = await Business.find(query);

@@ -9,7 +9,7 @@ import cors from "cors"
 import auth_router from "./routes/auth_routes.js"
 import user_router from "./routes/user_routes.js"
 import business_router from "./routes/business_routes.js";
-
+import resouce_router from "./routes/resource_routes.js"
 dotenv.config();
 const PORT = process.env.PORT || 8001;
 const MONGODB_URL = process.env.MONGODB_URL ;
@@ -26,6 +26,7 @@ app.use(cookieParser());
 app.use('/api/auth' , auth_router);
 app.use('/api/user' , user_router);
 app.use('/api/business' , business_router);
+app.use('/api/resource' , resouce_router);
 
 // server & mongodb
 server.listen(PORT , () => {
