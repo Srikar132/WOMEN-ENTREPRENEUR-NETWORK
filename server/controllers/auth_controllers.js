@@ -3,7 +3,7 @@ import crypto from "crypto"
 
 import { User } from "../models/user_model.js";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
-import { sendEmailVerificationCode , sendResetSuccussEamil , sendResetPasswordEmail , sendWelcomeEmail } from "../mailtrap/emails.js";
+import {sendForgotPasswordEmail, sendResetPasswordEmail, sendVerifyEmail,sendWelcomeEmail} from "../utils/mailer.utils.js";
 
 
 export const signup = async (req ,res ) => {
@@ -28,12 +28,16 @@ export const signup = async (req ,res ) => {
             verificationToken,
             verificationTokenExpiresAt : Date.now() +  24 * 60 * 60 * 1000 // 24 hours
         });
-
+s
         await user.save();
-
+        const data={
+            subject:"verfication code for basic auth",
+            text:`Your verficaiton code for basic auth is ${verificationToken}`,
+            token:verificationToken
+          }
         // jwt
         generateTokenAndSetCookie(res , user._id);
-        await sendEmailVerificationCode(email , verificationToken);
+        await sendVerifyEmail(email ,data);
 
         return res.status(200).json({
             message : "user craeted succussfully" ,
@@ -64,8 +68,12 @@ export const verifyEmail = async (req , res) => {
         user.isVerified = true ;
         user.verificationToken = undefined;
         user.verificationTokenExpiresAt = undefined;
-
-        await sendWelcomeEmail(user.email , user.name);
+        const data={
+            name:user.name,
+            email:user.email,
+        }
+        await user.save()
+        await sendWelcomeEmail(data);
 
         return res.status(200).json({
             message : "succufully verified email" ,
@@ -129,8 +137,12 @@ export const forgotPassword = async (req , res) => {
         user.resetPasswordVerificationToken = resetPasswordVerificationToken ;
         user.resetPasswordVerificationTokenExpiresAt = resetPasswordVerificationTokenExpiresAt ;
         await user.save();
-
-        await sendResetPasswordEmail(user.email , `${process.env.CLIENT_URL}/reset-password/${resetPasswordVerificationToken}`);
+        const data={
+            name:user.name,
+            email:user.email,
+            reseturi:`${process.env.CLIENT_URL}/reset-password/${resetPasswordVerificationToken}`
+        }
+        await sendForgotPasswordEmail(data);
         return res.status(200).json({message : "reset link sent succussfully"});
     } catch (error) {
         console.log("Error veriffying email" , error)
@@ -160,7 +172,11 @@ export const resetPassword = async (req , res) => {
 
         await user.save() ;
 
-        await sendResetSuccussEamil(user.email) ;
+        const data={
+            name:user.name,
+            email:user.email,
+        }
+       await sendResetPasswordEmail(data)
 
         return res.status(200).json({success : true , message : "Password reset successfull"})
     } catch (error) {
