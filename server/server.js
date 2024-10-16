@@ -22,7 +22,7 @@ const server = http.createServer(app);
 
 
 // middlewares
-app.use(cors({origin : "*"}));
+app.use(cors({origin : "http://localhost:5173" , credentials : true} ));
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 app.use(cookieParser());

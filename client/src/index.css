@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 body {
-    background-color: #f0f0f0;
+    background: url("./assets/pexels-hngstrm-1939485.jpg") top;
+    font-family: sans-serif;
 }

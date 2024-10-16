@@ -15,7 +15,7 @@ export const signup = async (req ,res ) => {
 
         const isUserExits = await User.findOne({email});
         if(isUserExits) {
-            return res.status(400).json({message : "user already exits with provided creadentials"})
+            return res.status(200).json({message : "user already exits with provided creadentials" , success : false})
         }
 
         const hashedpassword = await bcrypt.hash(password , 10);
@@ -28,7 +28,7 @@ export const signup = async (req ,res ) => {
             verificationToken,
             verificationTokenExpiresAt : Date.now() +  24 * 60 * 60 * 1000 // 24 hours
         });
-s
+
         await user.save();
         const data={
             subject:"verfication code for basic auth",
@@ -41,6 +41,7 @@ s
 
         return res.status(200).json({
             message : "user craeted succussfully" ,
+            success : true ,
             user : {
                 ...user._doc ,
                 password : undefined
@@ -50,7 +51,7 @@ s
 
     } catch (error) {
         console.log("Error signing up" , error)
-        return res.status(400).json({error : error.message})
+        return res.status(500).json({error : error.message , success : false})
     }
 }
 
@@ -63,7 +64,7 @@ export const verifyEmail = async (req , res) => {
         });
 
         if(!user) {
-            throw new Error("Invalid or expired verification code")
+            return res.status(200).json({message : "Invalid or OTP expired" , success : false})
         }
         user.isVerified = true ;
         user.verificationToken = undefined;
@@ -94,18 +95,19 @@ export const login = async (req , res) => {
         const user = await User.findOne({email}) ;
 
         if(!user) {
-            throw new Error("Invalid credentials");
+            return res.status(200).json({message : "email not found" , success : false})
         }
-
+        
         const isPasswordMatched = await bcrypt.compare(password , user.password) ;
         if(!isPasswordMatched) {
-            throw new Error("Invalid password");
+            return res.status(200).json({message : "Incorrect password" , success : false})
         }
 
         generateTokenAndSetCookie(res , user._id) ;
         user.lastLogin = Date.now();
         await user.save();
         return res.status(200).json({
+            success : true,
             message : "Logged in successfully" ,
             user : {
                 ...user._doc ,
@@ -113,13 +115,18 @@ export const login = async (req , res) => {
             }
         })
     } catch (error) {
-        console.log("Error in login" , error)
-        return res.status(400).json({error : error.message})
+        return res.status(500).json({message : "Error loggin in",error : error.message , success : false})
     }
 }
 
 export const logout = async (req  , res) => {
-    res.clearCookie("authToken");
+    res.clearCookie("authToken", {
+        httpOnly: true, // Match the cookie's httpOnly option
+        sameSite: "strict", // Same sameSite policy as when setting
+        secure: process.env.NODE_ENV === "production", // Match secure setting
+        path : "/"
+    });
+    console.log(res.cookie.authToken)
     res.status(200).json({message : "user logedout succussfully"})
 }
 

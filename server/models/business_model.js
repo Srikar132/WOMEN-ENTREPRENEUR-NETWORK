@@ -32,6 +32,8 @@ const businessSchema = new mongoose.Schema({
     timestamps: { currentTime: getISTTime } 
   }
 ) ;
+
+
 businessSchema.index({ name: "text", description: "text", category: "text",tags: "text" });
 
 
