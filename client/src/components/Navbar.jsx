@@ -7,11 +7,13 @@ import { navItems } from "../lib/utils.js"
 import Logo from '../assets/TREELOGO.jpg'
 import { useStore } from "../store/index.js"
 import { apiClient } from "../lib/api-clinet.js"
-import { LOGOUT_ROUTE } from "../utils/constants.js"
+import { HOST, LOGOUT_ROUTE } from "../utils/constants.js"
 import { toast } from "react-toastify"
+import ProfileSideNav from "./ProfileSideNav.jsx"
 
 
 function Navbar() {
+ const [openProfileSideNav , setOpenProfileSideNav] = useState(false);
   const [openSideNav , setOpenSideNav] = useState(false);
   const [section, setsection] = useState(-1);
   const boxRef = useRef(null);
@@ -32,20 +34,7 @@ function Navbar() {
 
   }  , []);
 
-  const handleLogout = async () => {
-    try {
-        const response = await apiClient.post(LOGOUT_ROUTE,{},{withCredentials : true}) ;
 
-        if(response.statusText !== "OK") {
-            toast.error("Network error");
-        }
-
-        toast.success(response.data.message);
-        setUserInfo(null);
-    } catch (error) {
-        toast.error("failed to logout")
-    }
-  }
 
 
   return (
@@ -69,7 +58,7 @@ function Navbar() {
                 </Link>
             </div>
 
-            <nav ref={sideNavRef} className={`h-screen  xl:space-y-0 space-y-3  xl:p-0  w-48 xl:w-auto xl:h-full z-20  fixed top-0 bottom-0  transition-all  duration-300 ${openSideNav ? "left-0" : "left-[-100%]"} xl:block bg-white xl:static `}>
+            <nav ref={sideNavRef} className={`h-screen z-50  xl:space-y-0 space-y-3  xl:p-0  w-48 xl:w-auto xl:h-full  fixed top-0 bottom-0  transition-all  duration-300 ${openSideNav ? "left-0" : "left-[-100%]"} xl:block bg-white xl:static `}>
                 <div className="flex xl:hidden  items-center justify-end"> <AiOutlineClose onClick={() => setOpenSideNav(false)} className="cursor-pointer m-1"/> </div>
                 <div className="logo p-2 xl:hidden block">
                     <Link to="/" className="flex gap-3 items-center w-full">
@@ -124,9 +113,17 @@ function Navbar() {
 
             <div className="flex items-center   gap-2 justify-between lg:p-2">
                 { !!userInfo ? (
-                    <>
-                        <button onClick={() =>handleLogout() } className="bg-white text-black py-2 px-5  lg:text-xl   tracking-wider whitespace-nowrap flex items-center justify-center">log out</button>
-                    </>
+                
+                        <button onClick={() => setOpenProfileSideNav((prev) => !prev)} className="flex gap-3 px-4  ">
+                            <div className="rounded-full h-12 w-12 overflow-hidden">
+                                <img src={`${HOST}/${userInfo?.profileImage}`} className="object-cover" alt="" />
+                            </div> 
+                            <div className="col-span-2 flex flex-col items-center justify-center ">
+                                <span className="text-xl italic tracking-wide">{userInfo.name}</span>
+                                <span className="text-[.3em] uppercase italic tracking-wide">{userInfo.role}</span>
+                            </div>
+                        </button>
+                    
                 ) : (
                     <>
                         <Link to={"/auth/login"} className="border whitespace-nowrap text-blue-500 border-blue-500 py-2 px-3 lg:px-5  lg:text-xl hover:bg-blue-500 hover:text-white  tracking-wider flex items-center justify-center">sign in</Link>
@@ -135,6 +132,8 @@ function Navbar() {
                 )}
             </div>   
         </motion.div>
+
+        <ProfileSideNav userInfo={userInfo} setOpenProfileSideNav={setOpenProfileSideNav} openProfileSideNav={openProfileSideNav}/>
 
     </div>
   )

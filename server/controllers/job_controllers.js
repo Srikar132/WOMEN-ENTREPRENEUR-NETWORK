@@ -44,7 +44,7 @@ export const getJobById = async (req , res) => {
     try {
         const {id} = req.params;
 
-        const job = await Job.findById(id) ;
+        const job = await Job.findById(id).populate("employer") ;
 
         if(!job) {
             return res.status(404).json({message : "job not found" , success : false})
@@ -110,7 +110,7 @@ export const applyToJob = async (req , res) => {
         }
         const {id} = req.params;
         const portfolioLinks  = JSON.parse(req.body.portfolioLinks) ;
-        
+        const {education , experience} = req.body;
         const job = await Job.findById(id) ;
         if(!job) {
             return res.status(404).json({message : "job not found" , success : false});
@@ -122,6 +122,8 @@ export const applyToJob = async (req , res) => {
             applicant : req.userId,
             resume : filePath ,
             portfolioLinks ,
+            education,
+            experience
         })
 
         await job.save();

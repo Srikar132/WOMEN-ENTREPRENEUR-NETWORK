@@ -37,7 +37,7 @@ function VerifyEmail() {
                 // 8985003051  
                 setUserInfo(response.data.user);
                 toast.success("email verified successfully");
-                navigate("/");
+                navigate("/auth/profile-setup");
             } catch (error) {   
                 console.log(error.message)
                 toast.error(error.message)

@@ -45,20 +45,20 @@ function Login() {
                     setLoginLoading(false)
                     return ;
                 }
-                // 8985003051
-
+                
                 toast.success(response.data.message);
                 if(response.data.user.isVerified == false) {
-                    console.log("hii")
                     navigate("/auth/verify-email")
+                    setLoginLoading(false);
+                    return ;
+                }else if(response.data.user?.isProfileSetup === false || response.data.user?.isProfileSetup === undefined) {
+                    navigate("/auth/profile-setup")
                     setLoginLoading(false);
                     return ;
                 }
                 setUserInfo(response.data.user);
                 setLoginLoading(false);
-                console.log("Hello")
                 navigate("/")
-                
             } catch (error) {
                 toast.error("Network Issue")
                 setLoginLoading(false);

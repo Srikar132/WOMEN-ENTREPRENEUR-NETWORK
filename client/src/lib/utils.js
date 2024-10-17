@@ -16,10 +16,10 @@ export const navItems = {
         {name : "post articles" , path : "/resource/post-articles"},
     ], 
     "for employees" : [
-        {name : "avaliable jobs" , path : "/jobs"}
+        {name : "avaliable jobs" , path : "/job "},
     ],
      "community" : [
-        {}
+        {name : "chat with community" , path : "/chat-community"}
      ]
 }
 
@@ -89,6 +89,23 @@ export const countriesWithStates = {
     Venezuela: ['Caracas', 'Zulia', 'Miranda', 'Bolívar'],
     Vietnam: ['Hanoi', 'Ho Chi Minh City', 'Da Nang', 'Haiphong'],
   };
+  
+
+export  const eventTags = [
+    "Women Empowerment",
+    "Entrepreneurship",
+    "Leadership",
+    "Networking",
+    "Business Growth",
+    "Personal Development",
+    "Innovation",
+    "Funding",
+    "Mentorship",
+    "Startups",
+    "Marketing",
+    "Community",
+    "Success Stories",
+  ];
   
 
   

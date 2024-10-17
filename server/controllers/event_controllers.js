@@ -2,9 +2,10 @@ import { Event } from "../models/event_model.js";
 
 export const createEvent = async (req, res) => {
     try {
-        const {title, description, date, country , state , city} = req.body;
+        const {title , category, description, date,tags ,  country , state} = req.body;
 
         if (!title || !description || !date) {
+            console.log(hello)
             return res.status(400).json({success: false, message: "All fields are required"});
         }
 
@@ -12,8 +13,10 @@ export const createEvent = async (req, res) => {
             title,
             description,
             date,
-            location : {country , state , city} ,
+            location : {country , state} ,
             createdBy: req.userId,
+            tags,
+            category
         });
 
         return res.status(200).json({success: true, message: "Event created successfully", event});

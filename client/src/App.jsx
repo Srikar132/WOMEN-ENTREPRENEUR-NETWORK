@@ -13,11 +13,16 @@ const VerifyEmail = React.lazy(() => import("./pages/VerifyEmail"))
 const CreateBusiness = React.lazy(() => import("./pages/CreateBusiness"))
 const ResourceArticle = React.lazy(() => import("./pages/ResourceArticle"))
 const ResourceArticlePage = React.lazy(() => import("./pages/ResourceArticlePage"))
+const CommunityChat = React.lazy(() => import("./pages/ComunityChat"))
 const PostArticle = React.lazy(() => import("./pages/PostArticle"))
 const Events = React.lazy(() => import('./pages/Events'));
 const HostEvent = React.lazy(() => import("./pages/HostEvent"))
+const JobList = React.lazy(() => import("./pages/Jobs"))
+const JobDetails = React.lazy(() => import('./pages/JobDetail'))
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ProfileSetup from './pages/ProfileSetup';
+import Profile from './pages/Profile';
 
 const AuthRoute = ({ children }) => {
   const { userInfo } = useStore();
@@ -64,12 +69,18 @@ function App() {
       <Suspense fallback={<>Component loading....</>}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/auth/verify-email" element={<VerifyEmail/>} />
           <Route path="/auth/login" element={<AuthRoute><Login /></AuthRoute>} />
           <Route path="/auth/register" element={<AuthRoute><Register /></AuthRoute>} />
+          <Route path="/auth/verify-email" element={<VerifyEmail/>} />
+          <Route path="/auth/profile-setup" element={<ProfileSetup/>} />
+          <Route path='/profile' element={<Profile/>}/>
+          <Route path='/chat-community' element={<PrivateRoute><CommunityChat/></PrivateRoute> }/>
 
           <Route path="/business/all-business" element={<Business />} />
           <Route path="/business/post-business" element={<PrivateRoute><CreateBusiness /></PrivateRoute> } />
+
+          <Route path='/job' element={<JobList/>} />
+          <Route path='/job/:id' element={<JobDetails/>} />
 
           <Route path='/resource/articles' element={<ResourceArticle/>}/>
           <Route path='/resource/articles/:id' element={<ResourceArticlePage/>}/>

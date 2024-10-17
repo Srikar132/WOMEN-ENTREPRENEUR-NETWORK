@@ -18,7 +18,7 @@ const router = Router();
 const uploads  = multer({storage})
 
 router.post('/create-job',verifyToken , checkIsAdminOrEnt,createJob)
-router.get('/get-jobs' , verifyToken , getAllJobs)
+router.get('/get-jobs' , getAllJobs)
 router.get('/get-job/:id',verifyToken,getJobById)
 router.post('/:id/apply' , verifyToken , uploads.single('resume') , applyToJob )
 router.get('/applications' , verifyToken ,getAllJobsThatUserApplied )

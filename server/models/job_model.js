@@ -11,6 +11,11 @@ const jobSchema = new mongoose.Schema({
       applicant: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       resume: { type: String, required: true }, 
       portfolioLinks: [{ type: String }], 
+      education : {
+        type : String,
+      },
+      experience : String ,
+      
       status: { type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending' }, 
       appliedAt: { type: Date, default: Date.now } 
   }],

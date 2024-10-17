@@ -12,6 +12,7 @@ import event_router from "./routes/event_routes.js"
 import business_router from "./routes/business_routes.js";
 import resouce_router from "./routes/resource_routes.js";
 import job_router from "./routes/job_routes.js"
+import { SetUpSocket } from "./socket.js";
 
 
 dotenv.config();
@@ -27,6 +28,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
+
+
 // routes
 app.use('/api/auth' , auth_router);
 app.use('/api/user' , user_router);
@@ -41,6 +44,8 @@ app.use('/api/job' ,job_router );
 server.listen(PORT , () => {
     console.log(`server is running on the PORT ${PORT}`)
 });
+
+SetUpSocket(server);
 
 mongoose.connect(MONGODB_URL,{
     // connectTimeoutMS: 30000

@@ -24,7 +24,10 @@ const UserSchema = new  mongoose.Schema({
     bio  : {type : String } ,
     contactInfo : {
         phone : String ,
-        address : String ,
+        address : {
+            country :String ,
+            state : String
+        } ,
         socialLinks : {
             facebook : String ,
             instagram : String ,
@@ -38,7 +41,6 @@ const UserSchema = new  mongoose.Schema({
     businesses : [{type : mongoose.Schema.Types.ObjectId , ref : "Business"}],
     eventsAttended : [{type : mongoose.Schema.Types.ObjectId , ref : "Event"}],
     dateJoined : {type : String , default : Date.now} ,
-    tags : [String] ,
     lastLogin : {
         type : Date ,
         default : Date.now
@@ -47,6 +49,7 @@ const UserSchema = new  mongoose.Schema({
         type : Boolean ,
         default : false
     } ,
+    isProfileSetup : {type : Boolean , default : false},
     verificationToken : String ,
     verificationTokenExpiresAt : Date ,
     resetPasswordVerificationToken : String ,

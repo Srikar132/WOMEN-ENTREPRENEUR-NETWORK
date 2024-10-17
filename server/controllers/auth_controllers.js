@@ -209,3 +209,36 @@ export const checkAuth = async  ( req , res ) => {
         
     }
 }
+
+export const updateProfile = async (req , res ) => {
+    try {
+        const { role , bio , phone , country , state , facebook , instagram , twitter , notifications , category } = req.body;
+        const user = await User.findById(req.userId);
+        if(!user) {
+            return res.status(400).json({message : "Invalid or expired token"})
+        }
+
+        const filePath = req.file ?  req.file.path.replace(/\\/g , '/') : "";
+
+        user.role = role ;
+        user.bio = bio ;
+        user.contactInfo.phone = phone ;
+        user.contactInfo.address.country = country;
+        user.contactInfo.address.state = state;
+        user.contactInfo.socialLinks.facebook = facebook;
+        user.contactInfo.socialLinks.instagram = instagram;
+        user.contactInfo.socialLinks.twitter = twitter;
+        user.preferences.categories = category;
+        user.preferences.notifications = notifications;
+        user.profileImage = filePath;
+        user.isProfileSetup = true;
+        await user.save();
+
+        return res.status(200).json({success : true , message : "profile setup completed"})
+
+        
+    } catch (error) {
+        console.log("Error in reset password" ,  error) ;
+        return res.status(400).json({error : error.message})
+    }
+}

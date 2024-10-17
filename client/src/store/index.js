@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import { authSlice } from "./slices/authSlice.js";
-export const useStore = create((set) => ({
-    ...authSlice(set)
+import { createChatSlice } from "./slices/chatSlice.js";
+export const useStore = create((set , get) => ({
+    ...authSlice(set),
+    ...createChatSlice(set , get)
 }))
