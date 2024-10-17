@@ -8,7 +8,7 @@ function Home() {
 
   return (
     <>
-        <main>
+        <main className='min-h-screen'>
             {userInfo?.email}
         </main>
 

@@ -11,7 +11,8 @@ export const navItems = {
         {}
     ] , 
     "resource hub" : [
-        {}
+        {name : "articles" , path : "/resource/articles"},
+        {name : "post articles" , path : "/resource/post-articles"},
     ], 
     "for employees" : [
         {}
@@ -20,3 +21,7 @@ export const navItems = {
         {}
      ]
 }
+
+
+
+  

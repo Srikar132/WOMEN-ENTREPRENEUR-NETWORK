@@ -46,13 +46,19 @@ function Login() {
                     return ;
                 }
                 // 8985003051
-                console.log(response.data.user.isVerified)
+
                 toast.success(response.data.message);
                 if(response.data.user.isVerified == false) {
-                    
+                    console.log("hii")
+                    navigate("/auth/verify-email")
+                    setLoginLoading(false);
+                    return ;
                 }
                 setUserInfo(response.data.user);
                 setLoginLoading(false);
+                console.log("Hello")
+                navigate("/")
+                
             } catch (error) {
                 toast.error("Network Issue")
                 setLoginLoading(false);
@@ -64,7 +70,7 @@ function Login() {
     <div className=''>
         <div className='h-[300px] flex items-center justify-center'>
             <div className='w-full p-5 flex items-center bg-white/20 backdrop-blur-sm justify-center'>
-                <motion.span initial={{opacity : 0 , y : 50}} animate={{opacity : 1 , y : 0}} exit={{opacity : 0 , y : 50}} transition={{ ease :"easeInOut" ,duration : 0.3}} className='sm:mr-20 text-5xl font-bold tracking-wider' >Member Login</motion.span>
+                <motion.span initial={{opacity : 0 , y : 50}} animate={{opacity : 1 , y : 0}} exit={{opacity : 0 , y : 50}} transition={{ ease :"easeInOut" ,duration : 0.3}} className='sm:mr-20 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-wider' >Member Login</motion.span>
             </div>
         </div>
 
@@ -105,7 +111,10 @@ function Login() {
                 <Link to="/" className="text-blue-500 cursor-pointer hover:underline "> i don't know my password </Link>
             </motion.div>
 
-            <div className="bg-white flex flex-col gap-5 border border-gray-200 shadow-lg p-6 basis-[450px]">
+            <motion.div
+                initial={{opacity : 0 , y : 50}}
+                animate={{opacity : 1 , y : 0}} exit={{opacity : 0 , y : 50}} transition={{ ease :"easeInOut" ,duration : 0.3}}
+            className="bg-white flex flex-col gap-5 border border-gray-200 shadow-lg p-6 basis-[450px]">
                 <div className="overflow-hidden h-52 flex items-center justify-center">
                     <img
                         src={womenbg}
@@ -118,7 +127,7 @@ function Login() {
                 <Link to={"/auth/register"} className="w-full flex items-center justify-center tracking-wider text-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white focus:border-blue-400 transition duration-200  text-white py-2 bg-blue-600">
                     Join us
                 </Link>
-            </div>
+            </motion.div>
         </div>
         
     </div>

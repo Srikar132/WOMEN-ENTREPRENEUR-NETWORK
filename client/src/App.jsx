@@ -10,6 +10,10 @@ const Business = React.lazy(() => import('./pages/Business'));
 const Login = React.lazy(() => import('./pages/Login'));
 const Register = React.lazy(() => import("./pages/Register"))
 const VerifyEmail = React.lazy(() => import("./pages/VerifyEmail"))
+const CreateBusiness = React.lazy(() => import("./pages/CreateBusiness"))
+const ResourceArticle = React.lazy(() => import("./pages/ResourceArticle"))
+const ResourceArticlePage = React.lazy(() => import("./pages/ResourceArticlePage"))
+const PostArticle = React.lazy(() => import("./pages/PostArticle"))
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -53,21 +57,26 @@ function App() {
   }, [userInfo, setUserInfo]);
 
   return (
-    <>
+    <div className=' bg-gradient-to-t from-white via-white to-blue-100'>
       <Navbar />
       <Suspense fallback={<>Component loading....</>}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/business/all-business" element={<Business />} />
           <Route path="/auth/verify-email" element={<VerifyEmail/>} />
           <Route path="/auth/login" element={<AuthRoute><Login /></AuthRoute>} />
           <Route path="/auth/register" element={<AuthRoute><Register /></AuthRoute>} />
 
+          <Route path="/business/all-business" element={<Business />} />
+          <Route path="/business/post-business" element={<PrivateRoute><CreateBusiness /></PrivateRoute> } />
+
+          <Route path='/resource/articles' element={<ResourceArticle/>}/>
+          <Route path='/resource/articles/:id' element={<ResourceArticlePage/>}/>
+          <Route path='/resource/post-articles' element={<PrivateRoute><PostArticle/></PrivateRoute> }/>
           <Route path='*' element={<>404 NOT FOUND</>}/>
         </Routes>
       </Suspense>
       <Footer />
-    </>
+    </div>
   );
 }
 

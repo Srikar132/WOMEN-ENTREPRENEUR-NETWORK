@@ -81,7 +81,8 @@ export const verifyEmail = async (req , res) => {
             user : {
                 ...user._doc ,
                 password : undefined
-            }
+            } ,
+            success : true
         })
     } catch (error) {
         console.log("Error veriffying email" , error)

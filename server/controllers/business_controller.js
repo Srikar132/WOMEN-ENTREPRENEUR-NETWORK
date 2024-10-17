@@ -38,8 +38,7 @@ export const createBusiness = async (req, res) => {
 };
 export const getAllBusinesses = async (req, res) => {
     try {
-        const businesses = await Business.find().populate('owner', 'name'); 
-        // console.log(businesses);
+        const businesses = await Business.find().populate('owner'); 
         
         res.status(200).json(businesses);
     } catch (error) {

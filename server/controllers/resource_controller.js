@@ -1,8 +1,8 @@
 import { Resource } from "../models/resourse_model.js"
 import { User } from "../models/user_model.js";
 
-export const createResource=async(req,res)=>{
-    const{title,content,category,author,tags,version,lastUpdatedBy,updatedAt}=req.body
+export const createResource = async(req,res)=>{
+    const{title,content,category , tags} = req.body
     try {
 
         const user = await User.findById(req.userId);
@@ -17,9 +17,8 @@ export const createResource=async(req,res)=>{
             category,
             author:user._id,
             tags,
-            version,
-            lastUpdatedBy,
-            updatedAt
+            lastUpdatedBy : user._id,
+            version : 1
         })
         const savedResource=await resource.save();
         res.status(200).json({success:true,message:"Resouce Created Successfully",savedResource})
@@ -28,8 +27,9 @@ export const createResource=async(req,res)=>{
         return res.status(403).json({ message: 'Permission denied' });
        } 
     } catch (error) {
+        console.log(error.message)
         res.status(500).json({
-            success:"False",
+            success: false,
             message: "Error creating resource",
             error: error.message
         });
@@ -47,10 +47,11 @@ export const getAllResources = async (req, res) => {
         });
     }
 };
+
 export const getResourceById = async (req, res) => {
     const resouceId = req.params.id
     try {
-        const resource = await Resource.findById(resouceId).populate('author', 'name') ;         
+        const resource = await Resource.findById(resouceId).populate("author") ;         
         res.status(200).json(resource);
     } catch (error) {
         res.status(500).json({
@@ -59,6 +60,7 @@ export const getResourceById = async (req, res) => {
         });
     }
 };
+
 export const getResourceByCategory = async (req, res) => {
     const ResourceCategory = req.params.category
     console.log(ResourceCategory);

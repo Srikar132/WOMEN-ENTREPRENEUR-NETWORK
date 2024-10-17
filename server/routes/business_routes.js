@@ -14,8 +14,8 @@ import { createBusiness,
 const router = Router();
 
 
-router.post('/createBusiness',verifyToken,createBusiness)
-router.get('/getAllBusiness',verifyToken,getAllBusinesses)
+router.post('/create-business',verifyToken,createBusiness)
+router.get('/get-all-business',getAllBusinesses)
 router.get('/getBusiness/:id',verifyToken,getBusinessById)
 router.patch('/updateBusiness/:id',verifyToken,updateBusinessById)
 router.delete('/deleteBusiness/:id',verifyToken,deleteBusinessById)
