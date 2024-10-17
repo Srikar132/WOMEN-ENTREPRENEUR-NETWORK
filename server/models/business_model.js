@@ -15,7 +15,7 @@ const businessSchema = new mongoose.Schema({
     owner : {type : mongoose.Schema.Types.ObjectId , ref : "User" , required : true} ,
     location : {
         country : String ,
-        city : String 
+        state : String 
     } ,
     ratings : {
         total : {type : Number , default : 0},
@@ -32,6 +32,8 @@ const businessSchema = new mongoose.Schema({
     timestamps: { currentTime: getISTTime } 
   }
 ) ;
+
+
 businessSchema.index({ name: "text", description: "text", category: "text",tags: "text" });
 
 

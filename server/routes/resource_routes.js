@@ -10,10 +10,10 @@ import { createResource, getAllResources, getResourceById,updateResourceById,del
 
 const router = Router();
 
-router.post('/',verifyToken,createResource)
-router.get('/',verifyToken,getAllResources)
+router.post('/create-resource',verifyToken,createResource)
+router.get('/',getAllResources)
 router.get('/search',verifyToken,searchResource)
-router.get('/:id',verifyToken,getResourceById)
+router.get('/:id',getResourceById)
 router.get('/category/:category',verifyToken,getResourceByCategory)
 router.patch('/:id',verifyToken,updateResourceById)
 router.delete('/:id',verifyToken,deleteBusinessById)

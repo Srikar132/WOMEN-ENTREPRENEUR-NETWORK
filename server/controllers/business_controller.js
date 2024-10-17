@@ -5,32 +5,36 @@ const { ObjectId } = mongoose.Types;
 
 
 export const createBusiness = async (req, res) => {
-    const { name, description, category, website, reviews,ratings, location, tags, logoImage } = req.body;
-   const owner= req.userId
     try {
+        if(!req.file) {
+            return res.status(400).json({message : "file is required" ,success : false})
+        }
+        const { name, description, category, website, country , state  , tags } = req.body;
+        const owner= req.userId;
+        console.log(req.body)
+        const filePath = req.file.path.replace(/\\/g , '/');
         const newBusiness = new Business({
             name,
             description,
             category,
             website,
             owner,
-            location,
+            location : {country , state},
             tags,
-            logoImage,
-            reviews,
-            ratings,
+            logoImage : filePath,
         });
 
         const savedBusiness = await newBusiness.save();
 
-        res.status(201).json({
-            success:"True",
+        res.status(200).json({
+            success:true,
             message: "Business created successfully",
             business: savedBusiness
         });
     } catch (error) {
+        console.log(error.message)  
         res.status(500).json({
-            success:"False",
+            success:false,
             message: "Error creating Resource",
             error: error.message
         });
@@ -38,8 +42,7 @@ export const createBusiness = async (req, res) => {
 };
 export const getAllBusinesses = async (req, res) => {
     try {
-        const businesses = await Business.find().populate('owner', 'name'); 
-        // console.log(businesses);
+        const businesses = await Business.find().populate('owner'); 
         
         res.status(200).json(businesses);
     } catch (error) {
