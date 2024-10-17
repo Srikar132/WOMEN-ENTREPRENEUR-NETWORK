@@ -2,7 +2,7 @@ import { Event } from "../models/event_model.js";
 
 export const createEvent = async (req, res) => {
     try {
-        const {title, description, date, location = 'not mentioned'} = req.body;
+        const {title, description, date, country , state , city} = req.body;
 
         if (!title || !description || !date) {
             return res.status(400).json({success: false, message: "All fields are required"});
@@ -12,7 +12,7 @@ export const createEvent = async (req, res) => {
             title,
             description,
             date,
-            location,
+            location : {country , state , city} ,
             createdBy: req.userId,
         });
 

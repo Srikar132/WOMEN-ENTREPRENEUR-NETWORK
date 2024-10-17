@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import {apiClient} from "../lib/api-clinet"
 import { GET_ALL_RESOURCES } from "../utils/constants"
 import {toast} from "react-toastify"
+import SkeletonCard from "../components/SkeletonCard"
 function ResourceArticle() {
     const [searchTerm, setsearchTerm] = useState("")
     const [category , setCategory] = useState("")
@@ -102,11 +103,9 @@ function ResourceArticle() {
                 </div>
             </div>
             {loading ? (
-                <div className="flex items-center justify-center h-[100px]">
-                    <div className="w-[50px] h-[50px] rounded-full border border-gray-400 border-t-black animate-spin"/>
-                </div>
+                <SkeletonCard/>
             ) : (
-                <div className="flex flex-wrap w-full gap-5 justify-center px-3 sm:px-9 md:px-32 lg:px-80  py-5">
+                <div className="flex flex-wrap w-full gap-5  px-3 sm:px-9 md:px-32 lg:px-80  py-5">
                     {resources?.map((article , index) => (
                         <div className="card basis-[300px] p-3 flex flex-col gap-3 shadow-md hover:scale-[101%] transition-all duration-500">
                             <div className="w-full h-full max-w-full max-h-full overflow-hidden">

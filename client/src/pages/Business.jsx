@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import {motion} from "framer-motion"
 import { AiOutlineSearch } from 'react-icons/ai';
-import { GET_ALL_BUSINESSES } from '../utils/constants';
+import { GET_ALL_BUSINESSES, HOST } from '../utils/constants';
 import image from "../assets/woemnemp.jpeg"
 import {toast} from "react-toastify"
 import { apiClient } from '../lib/api-clinet';
 import {Link} from "react-router-dom"
+import SkeletonCard from "../components/SkeletonCard"
 function Business() {
   const [searchTerm , setsearchTerm] = useState("");
   const [category, setCategory ] = useState("");
@@ -83,20 +84,18 @@ function Business() {
 
 
             {loading ? (
-                <div className="flex items-center justify-center h-[100px]">
-                  <div className="w-[50px] h-[50px] rounded-full border border-gray-400 border-t-black animate-spin"/>
-              </div>
+              <SkeletonCard/>
             ) : (
-              <div className="flex flex-wrap w-full gap-5 justify-center px-3 sm:px-9 md:px-32 lg:px-80  py-5">
+              <div className="flex flex-wrap w-full gap-5  px-3 sm:px-9 md:px-32 lg:px-80  py-5">
                   {business.map((item , index) => (
                   <div
                     key={item.name}
-                    className="bg-white shadow-sm  p-6 transition-transform transform hover:scale-[101%]"
+                    className="bg-white basis-[400px] shadow-md  p-6 transition-transform transform hover:scale-[101%]"
                   >
                     <img
-                      src={image}
+                      src={`${HOST}/${item.logoImage}`}
                       alt={item.name}
-                      className="h-50 w-50 object-contain mx-auto mb-4"
+                      className="h-52 w-52 object-contain mx-auto mb-4"
                     />
                     <Link className="text-2xl font-bold text-blue-800 mb-2">
                       {item.name}
@@ -106,7 +105,7 @@ function Business() {
                       Category: {item.category}
                     </p>
                     <p className="text-sm font-semibold text-gray-500">
-                      Location: {item.location.city}, {item.location.country}
+                      Location: {item.location?.state }, {item.location?.country}
                     </p>
                     <p className="mt-4">
                       <a

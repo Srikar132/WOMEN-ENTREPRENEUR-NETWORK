@@ -1,4 +1,5 @@
 import { Router } from "express";
+import multer from "multer"
 import { verifyToken } from "../middlewares/verifyToken.js";
 import { createBusiness,
      getAllBusinesses,
@@ -13,8 +14,21 @@ import { createBusiness,
 } from "../controllers/business_controller.js";
 const router = Router();
 
+const storage = multer.diskStorage({
+      destination : (req , file , cb) => {
+          cb(null , 'uploads/business/')
+      } ,
+      filename : (req , file , cb) => {
+          const date = Date.now() ;
+          const fileExtension = file.originalname.substring(file.originalname.lastIndexOf('.'))
+  
+          cb(null ,`${req.userId}_${date}business${fileExtension}` )
+      }
+  })
 
-router.post('/create-business',verifyToken,createBusiness)
+  const uploads = multer({storage})
+
+router.post('/create-business',verifyToken,uploads.single("logoImage"),createBusiness)
 router.get('/get-all-business',getAllBusinesses)
 router.get('/getBusiness/:id',verifyToken,getBusinessById)
 router.patch('/updateBusiness/:id',verifyToken,updateBusinessById)

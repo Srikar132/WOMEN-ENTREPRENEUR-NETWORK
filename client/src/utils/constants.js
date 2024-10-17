@@ -10,3 +10,6 @@ export const GET_ALL_RESOURCES = 'api/resource/'
 export const GET_ALL_RESOURCE = 'api/resource/'
 
 export const GET_ALL_BUSINESSES = 'api/business/get-all-business'
+export const POST_A_BUSINESS = 'api/business/create-business'
+
+export const GET_ALL_EVENTS =  `api/event/upcoming-events`

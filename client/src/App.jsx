@@ -14,6 +14,8 @@ const CreateBusiness = React.lazy(() => import("./pages/CreateBusiness"))
 const ResourceArticle = React.lazy(() => import("./pages/ResourceArticle"))
 const ResourceArticlePage = React.lazy(() => import("./pages/ResourceArticlePage"))
 const PostArticle = React.lazy(() => import("./pages/PostArticle"))
+const Events = React.lazy(() => import('./pages/Events'));
+const HostEvent = React.lazy(() => import("./pages/HostEvent"))
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -72,6 +74,9 @@ function App() {
           <Route path='/resource/articles' element={<ResourceArticle/>}/>
           <Route path='/resource/articles/:id' element={<ResourceArticlePage/>}/>
           <Route path='/resource/post-articles' element={<PrivateRoute><PostArticle/></PrivateRoute> }/>
+
+          <Route path='/events/all-events' element={<Events/>}/>
+          <Route path='/events/host-event' element={<PrivateRoute><HostEvent/></PrivateRoute>}/>
           <Route path='*' element={<>404 NOT FOUND</>}/>
         </Routes>
       </Suspense>
