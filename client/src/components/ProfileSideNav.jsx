@@ -24,7 +24,7 @@ function ProfileSideNav({openProfileSideNav , setOpenProfileSideNav}) {
         }
       }
   return (
-    <div className={`h-screen shadow-md border-l border-gray-500 flex flex-col gap-3 bg-white  overflow-scroll scrollbar-hide w-[303px] p-2 fixed top-0 ${openProfileSideNav ? "right-0" : "right-[-100%]"} transition-all duration-300`}>
+    <div className={`h-screen z-50 shadow-md border-l border-gray-500 flex flex-col gap-3 bg-white  overflow-scroll scrollbar-hide w-[303px] p-2 fixed top-0 ${openProfileSideNav ? "right-0" : "right-[-100%]"} transition-all duration-300`}>
         <div className="w-full flex items-center justify-between gap-2 p-2">
             <button onClick={() => setOpenProfileSideNav((prev) => !prev)} className="flex gap-3 px-4  ">
                 <div className="rounded-full h-12 w-12 overflow-hidden">
@@ -45,10 +45,10 @@ function ProfileSideNav({openProfileSideNav , setOpenProfileSideNav}) {
         </div>
         <hr />
         <div className="w-full flex flex-col gap-1">
-            <Link className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineMoneyCollect/> your businesses </Link>
-            <Link className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineFundProjectionScreen/> your events </Link>
-            <Link className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineBook/> your resources </Link>
-            <Link className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineAccountBook/> your job posts </Link>
+            <Link onClick={() => setOpenProfileSideNav(false)} to={"/your-businesses"} className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineMoneyCollect/> your businesses </Link>
+            <Link  onClick={() => setOpenProfileSideNav(false)} to={"/your-events"}className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineFundProjectionScreen/> your events </Link>
+            <Link onClick={() => setOpenProfileSideNav(false)} to={"/your-resources"} className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineBook/> your resources </Link>
+            <Link onClick={() => setOpenProfileSideNav(false)} to={"/your-jobs"} className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineAccountBook/> your job posts </Link>
         </div>
         <hr />
         <div className="w-full flex flex-col gap-1">

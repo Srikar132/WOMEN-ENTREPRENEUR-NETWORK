@@ -1,7 +1,6 @@
 import { Event } from "../models/event_model.js";
 import { User } from "../models/user_model.js";
 
-
 export const createEvent = async (req, res) => {
     try {
         const {title , category, description, date,tags ,  country , state} = req.body;
@@ -78,6 +77,26 @@ export const updateEventById = async (req, res) => {
         return res.status(500).json({message: "Error updating event", error: error.message});
     }
 };
+export const updateVirtualLink = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const {virtualLink} = req.body;
+
+        
+        const event = await Event.findById(id);
+
+        if(!event) {
+            return res.status(400).json({success: false, message: "Event not found"});
+        }
+
+        event.virtualLink = virtualLink;
+        await event.save();
+        return res.status(200).json({success: true, message: "Successfully updated virtual link"});
+    } catch (error) {
+        console.log("Error in updating event:", error.message);
+        return res.status(500).json({message: "Error updating event", error: error.message});
+    }
+};
 
 export const deleteEventById = async (req, res) => {
     try {
@@ -96,7 +115,7 @@ export const deleteEventById = async (req, res) => {
 export const registerForAnEvent = async (req, res) => {
     try {
         const {eventId} = req.params;
-        const userId = req.userId; // Assuming it's coming from authentication middleware
+        const userId = req.userId;
         const event = await Event.findById(eventId);
         if (!event) {
             return res.status(400).json({message: "Event not found", success: false});
@@ -138,11 +157,14 @@ export const getAttendeesForAnEvent = async (req, res) => {
 
 export const searchEvents = async (req , res) => {
     try {
-        const {title , location , date } = req.query;
+        const {title , location , date , category} = req.query;
 
         const searchQuery = {} ;
         if(title) {
             searchQuery.title = {$regex : title , $options : "i"};
+        }
+        if(category) {
+            searchQuery.category = {$regex : category , $options : "i"};
         }
 
         if(date) {
@@ -152,8 +174,9 @@ export const searchEvents = async (req , res) => {
         if(location) {
             searchEvents.location = {$regex : location , $options : "i"}
         }
+        
 
-        const events = await Event.find(searchQuery);
+        const events = await Event.find({...searchQuery , date : {$gt : new  Date()}})
 
         if(events.length == 0) {
             return res.status(404).json({message : "No events found" , success : false})
@@ -164,7 +187,8 @@ export const searchEvents = async (req , res) => {
         return res.status(500).json({message: "Error searching events", error: error.message});
     }
 }
-export const getEventsByUserId = async (req, res) => {
+
+export const getEventsByUserIdUpcoming = async (req, res) => {
     const userId = req.userId;
     console.log(userId);
     
@@ -174,7 +198,26 @@ export const getEventsByUserId = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const Events = await Event.find({ 'createdBy': userId });
+        const Events = await Event.find({ 'createdBy': userId , date: {$gt: new Date()} });
+
+        res.status(200).json(Events);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error at fetching business', error: error.message });
+    }
+};
+export const getEventsByUserIdCompleted = async (req, res) => {
+    const userId = req.userId;
+    console.log(userId);
+    
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const Events = await Event.find({ 'createdBy': userId , date: {$lt: new Date()} });
+
 
         res.status(200).json(Events);
     } catch (error) {

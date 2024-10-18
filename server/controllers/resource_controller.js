@@ -142,6 +142,7 @@ export const deleteBusinessById = async (req, res) => {
         res.status(500).json({ message: 'Error deleting Resource', error: error.message });
     }
 };
+
 export const searchResource = async (req, res) => {
     const { category, tags, title } = req.query;
 
@@ -150,6 +151,7 @@ export const searchResource = async (req, res) => {
 
         // Category filter with regex (case-insensitive)
         if (category) {
+
             query.category = { $regex: category, $options: "i" };
         }
 
@@ -161,17 +163,27 @@ export const searchResource = async (req, res) => {
 
         // Title filter with full-text search or regex (if text search is configured)
         if (title) {
-            query.$text = { $search: title };  // For full-text search on title
+            query.title = {$regex : title , $options : "i"};
         }
 
-        // Find resources and sort by text score if title search is used
-        const resources = await Resource.find(query, title ? { score: { $meta: "textScore" } } : {})
-            .sort(title ? { score: { $meta: "textScore" } } : {})
-            .exec();
+        const resources = await Resource.find(query)
 
         res.status(200).json(resources);
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching resources: ", error);
         res.status(500).json({ message: 'Error fetching resources', error: error.message });
+    }
+};
+
+export const getResourcesByUserId = async (req, res) => {
+    const userId = req.userId;
+    console.log("Hello ")
+    try {
+        const resources = await Resource.find({ 'author': userId });
+
+        return res.status(200).json(resources);
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).json({ message: 'Error at fetching job', error: error.message });
     }
 };

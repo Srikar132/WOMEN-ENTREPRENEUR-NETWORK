@@ -11,6 +11,7 @@ function Home() {
         <main className='min-h-screen'>
             {userInfo?.email}
         </main>
+        
 
     </>
   )

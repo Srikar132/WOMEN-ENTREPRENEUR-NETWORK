@@ -23,6 +23,7 @@ function HostEvent() {
       setSelectedTags([...selectedTags , tags[i]])
     }
   }
+  const today = new Date().toISOString().split('T')[0];
 
   const handleSubmit = async (e) => {
     e.preventDefault() ;
@@ -50,7 +51,7 @@ function HostEvent() {
     <div>
         <div className='h-[300px] z-0 flex items-center justify-center'>
             <div className='w-full p-5 flex items-center bg-white/20 backdrop-blur-sm justify-center'>
-                <span initial={{opacity : 0 , y : 50}} animate={{opacity : 1 , y : 0}} exit={{opacity : 0 , y : 50}} transition={{ ease :"easeInOut" ,duration : 0.3}} className='sm:mr-20 text-xl z-0 sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-wider' >Share knowledge</span>
+                <mspan initial={{opacity : 0 , y : 50}} animate={{opacity : 1 , y : 0}} exit={{opacity : 0 , y : 50}} transition={{ ease :"easeInOut" ,duration : 0.3}} className='sm:mr-20 text-xl z-0 sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-wider' >Share knowledge</mspan>
             </div>
         </div>
 
@@ -87,6 +88,7 @@ function HostEvent() {
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
                             type="date"
+                            min={today}
                             required
                             className="w-full placeholder-shown tracking-wider p-2 border border-gray-300  focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white focus:border-blue-400 transition duration-200"
                         />

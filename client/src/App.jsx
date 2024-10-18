@@ -19,10 +19,15 @@ const Events = React.lazy(() => import('./pages/Events'));
 const HostEvent = React.lazy(() => import("./pages/HostEvent"))
 const JobList = React.lazy(() => import("./pages/Jobs"))
 const JobDetails = React.lazy(() => import('./pages/JobDetail'))
+const YourBusinesses = React.lazy(() => import('./pages/YourBusinesses'))
+const YourEvent = React.lazy(() => import('./pages/YourEvent'))
+const YourJobs = React.lazy(() => import('./pages/YourJobs'))
+
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProfileSetup from './pages/ProfileSetup';
 import Profile from './pages/Profile';
+import YourResource from './pages/YourResource';
 import CreateJob from './pages/CreateJob';
 import GetLocation from './components/GetLocation';
 
@@ -78,6 +83,10 @@ function App() {
           <Route path="/auth/profile-setup" element={<ProfileSetup/>} />
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/chat-community' element={<PrivateRoute><CommunityChat/></PrivateRoute> }/>
+          <Route path='/your-businesses' element={<PrivateRoute><YourBusinesses/></PrivateRoute> }/>
+          <Route path='/your-events' element={<PrivateRoute><YourEvent/></PrivateRoute> }/>
+          <Route path='/your-resources' element={<PrivateRoute><YourResource/></PrivateRoute> }/>
+          <Route path='/your-jobs' element={<PrivateRoute><YourJobs/></PrivateRoute> }/>
 
           <Route path="/business/all-business" element={<Business />} />
           <Route path="/business/post-business" element={<PrivateRoute><CreateBusiness /></PrivateRoute> } />

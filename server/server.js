@@ -12,6 +12,7 @@ import event_router from "./routes/event_routes.js"
 import business_router from "./routes/business_routes.js";
 import resouce_router from "./routes/resource_routes.js";
 import job_router from "./routes/job_routes.js"
+import message_router from "./routes/message_routes.js"
 import { SetUpSocket } from "./socket.js";
 
 
@@ -37,6 +38,7 @@ app.use('/api/event',event_router);
 app.use('/api/business' , business_router);
 app.use('/api/resource' , resouce_router);
 app.use('/api/job' ,job_router );
+app.use("/api/message",message_router)
 
 
 

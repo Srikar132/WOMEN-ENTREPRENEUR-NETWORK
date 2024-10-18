@@ -6,10 +6,13 @@ import { toast } from "react-toastify";
 import {format} from"date-fns"
 import { AiFillInstagram, AiFillLinkedin, AiOutlineFacebook } from "react-icons/ai";
 import image from "../assets/woemnemp.jpeg"
+
+
 function ResourceArticlePage() {
     const {id} = useParams();
     const [resource , setResource] = useState({});
     const [loading , setLoading] = useState(false);
+
     useEffect(() => {
         const getResource = async () => {
             try {
@@ -24,6 +27,7 @@ function ResourceArticlePage() {
         }
         getResource();
     } , [])
+    
   return (
     <div className="min-h-screen bg-white flex  flex-wrap justify-center">
         <div className='bg-white p-5 max-w-[700px] min-w-[350px] flex flex-col items-center gap-5'>
@@ -75,6 +79,7 @@ function ResourceArticlePage() {
                 <Link className="text-blue-400 hover:text-blue-500 hover:underline">article 21</Link>
                 <Link className="text-blue-400 hover:text-blue-500 hover:underline">article 3</Link>
             </div>
+            
         </div>
     </div>
   )

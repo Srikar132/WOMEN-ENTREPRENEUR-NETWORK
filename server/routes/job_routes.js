@@ -21,6 +21,7 @@ const uploads  = multer({storage})
 
 router.post('/create-job',verifyToken , checkIsAdminOrEnt,createJob)
 router.get('/get-jobs' , getAllJobs)
+
 router.get('/search' , searchJob)
 router.get('/get-job/:id',verifyToken,getJobById)
 router.get('/get-jobs-by-user-id',verifyToken,getJobByUserId)

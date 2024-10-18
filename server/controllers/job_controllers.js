@@ -1,7 +1,6 @@
 import { Job } from "../models/job_model.js";
 import { User } from "../models/user_model.js";
 
-
 export const createJob = async (req , res) => {
 
     try {
@@ -211,7 +210,6 @@ export const updateStatus = async (req , res) => {
     }
 }
 
-
 export const searchJob = async (req, res) => {
     const { category, tags, title, location, companyName } = req.query;
 
@@ -265,7 +263,8 @@ export const getJobByUserId = async (req, res) => {
         res.status(200).json(jobs);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error at fetching business', error: error.message });
+
+        res.status(500).json({ message: 'Error at fetching job', error: error.message });
     }
 };
 export const getJobByLoc = async (req, res) => {
@@ -282,4 +281,3 @@ export const getJobByLoc = async (req, res) => {
         res.status(500).json({ message: 'Error at fetching business', error: error.message });
     }
 };
-
