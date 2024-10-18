@@ -1,21 +1,24 @@
-
-import { motion } from "framer-motion";
+import {motion} from "framer-motion"
 import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaCalendarAlt } from "react-icons/fa";
 import { GET_ALL_EVENTS } from "../utils/constants";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify"
 import { apiClient } from "../lib/api-clinet";
 import image from "../assets/WEMBG.jpg";
 import { format } from "date-fns";
 import axios from "axios";
 
+
+
 function Events() {
 
-    const [searchTerm, setSearchTerm] = useState("");
-    const [category, setCategory] = useState("");
+    const [searchTerm , setsearchTerm] = useState("");
+    const [category, setCategory ] = useState("");
+
     const [loading, setLoading] = useState(false);
-    const [events, setEvents] = useState([]);
+    const [events, setEvents] = useState([""]);
+
     const cardVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0 }
@@ -25,50 +28,58 @@ function Events() {
     const getEvents = async () => {
         try {
             setLoading(true);
-            const response = await apiClient.get(`${GET_ALL_EVENTS}`, { withCredentials: true });
-            setEvents(response.data.events);
+
+            const response = await apiClient.get(`${GET_ALL_EVENTS}`,{withCredentials : true});
+            setEvents(response.data.events)
+            console.log(response.data)
+            setLoading(false);
+
         } catch (error) {
-            toast.error(error.message);
+            toast.error(error.message)
+            setLoading(false);
             setEvents([]);
-        } finally {
+        }
+        finally{
             setLoading(false);
         }
-    };
+
+
+    }
 
     const searchEvents = async () => {
         try {
-
-            setLoading(true);
-            let queryString = '/api/event/search?';
-        
-              if (searchTerm) {
-                queryString += `title=${searchTerm}&`;
-              }
-        
-            if (category) {
-               queryString += `category=${category}&`;
-            }
-            const uri=`http://localhost:8000${queryString}`
-            console.log(uri);
-            
-            console.log(queryString); 
-            const response = await axios.get(uri,{withCredentials : true});
-            setEvents(response.data.events)
-            setLoading(false);
-            console.log( "searched : " ,response.data)
+          setLoading(true);
+    
+          
+          let queryString = '/api/events/search?';
+    
+          if (searchTerm) {
+            queryString += `name=${searchTerm}&`;
+          }
+    
+          if (category) {
+            queryString += `category=${category}&`;
+          }
+    
+          console.log(queryString); 
+    
+       
+          const response = await apiClient.get(queryString, { withCredentials: true });
+          setEvents(response.data);
+          console.log(">>>>>>>",events)
+          setLoading(false);
         } catch (error) {
-            toast.error("Error")
-            setLoading(false);
-            setEvents([]);
+          toast.error(error.message);
+          setLoading(false);
         }
       };
     
-    
+     
+
     
     useEffect(() => {
         getEvents();
-    }, []);
-
+    } ,[])
 
     useEffect(() => {
         searchEvents();
@@ -82,7 +93,10 @@ function Events() {
                 <div className='w-full p-5 flex flex-col items-center bg-white/20 backdrop-blur-sm justify-center'>
                     <motion.span initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 50 }} transition={{ ease: "easeInOut", duration: 0.3 }} className='sm:mr-20 z-0 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-wider'>Events Organisation</motion.span>
                 </div>
+
+  
             </div>
+        </div>
 
             <div className="bg-white flex flex-col">
                 
@@ -107,15 +121,20 @@ function Events() {
                         </select>
                     </div>
 
-                    <div className="flex items-center justify-center">
-                        <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="search" type="text" className="w-full flex-1 p-2 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400 focus:ring-offset-1 focus:ring-offset-white focus:border-blue-400 transition duration-200" />
-                        <div>
-                            <button className="border text-2xl focus:ring-4 h-[100%] px-2 py-2 text-blue-700 bg-white">
-                                <AiOutlineSearch />
-                            </button>
-                        </div>
+
+                <div className="flex items-center justify-center ">
+                    <input 
+                    value={searchTerm}
+                    onChange={(e) => {
+                     setsearchTerm(e.target.value);
+                    }} placeholder="search" type="text"  className="flex-1 w-full p-2 transition duration-200 border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-400 focus:ring-offset-1 focus:ring-offset-white focus:border-blue-400"/>
+                    <div>
+                        <button  className="border  text-2xl focus:ring-4 h-[100%] px-2 py-2 text-blue-700 bg-white ">
+                            <AiOutlineSearch  />
+                        </button>
                     </div>
                 </div>
+            </div>
 
                 {loading ? (
                     <div className="flex items-center justify-center h-[100px]">
@@ -154,7 +173,10 @@ function Events() {
                 )}
             </div>
         </div>
-    );
+
+
+    </div>
+  )
 }
 
 export default Events;

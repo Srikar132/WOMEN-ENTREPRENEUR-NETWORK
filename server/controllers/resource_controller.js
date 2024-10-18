@@ -149,15 +149,19 @@ export const searchResource = async (req, res) => {
     try {
         const query = {};
 
+        // Category filter with regex (case-insensitive)
         if (category) {
-            query.category = {$regex : category , $options : "i"};
+
+            query.category = { $regex: category, $options: "i" };
         }
 
+        // Tags filter (matching any of the provided tags)
         if (tags) {
             const tagsArray = tags.split(',').map(tag => tag.trim());
-            query.tags = { $in: tagsArray };
+            query.tags = { $in: tagsArray }; // No regex needed, we match exact tags
         }
 
+        // Title filter with full-text search or regex (if text search is configured)
         if (title) {
             query.title = {$regex : title , $options : "i"};
         }
@@ -170,8 +174,6 @@ export const searchResource = async (req, res) => {
         res.status(500).json({ message: 'Error fetching resources', error: error.message });
     }
 };
-
-
 
 export const getResourcesByUserId = async (req, res) => {
     const userId = req.userId;

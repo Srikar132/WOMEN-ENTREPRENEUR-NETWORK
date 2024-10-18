@@ -218,6 +218,7 @@ export const getEventsByUserIdCompleted = async (req, res) => {
 
         const Events = await Event.find({ 'createdBy': userId , date: {$lt: new Date()} });
 
+
         res.status(200).json(Events);
     } catch (error) {
         console.error(error);
