@@ -69,8 +69,8 @@ function Navbar() {
 
                 <ul className="flex flex-col xl:h-[67px] xl:flex-row xl:gap-10 text-opacity-65 items-start xl:items-center xl:justify-center">
                     {Object.keys(navItems).map((key , index) => (
-                        <>
-                            <motion.li  key={key}
+                        
+                            <motion.li  key={index}
                                 onClick={() =>{ setsection((prev) => prev = prev == index ? -1 : index)}} className="relative whitespace-nowrap w-full flex xl:px-2 xl:flex-row flex-col items-center gap-2 xl:justify-between px-2 p-1 py-3  xl:rounded-none  xl:py-5 xl:hover:bg-white  xl:hover:border-b-[4px] xl:hover:border-blue-500 hover cursor-pointer "> 
                                 <div className="flex items-center justify-start w-full gap-2">
                                     <FaAngleDown/> <span className=" capitalize">{key}</span>  
@@ -82,7 +82,7 @@ function Navbar() {
                                         <ul className="flex flex-col items-center w-full pt-2 ">
                                             {navItems[key].map((obj , index ) => {
                                                 return (
-                                                    <Link key={obj} to={`${obj.path}`} className="px-3 w-full hover:bg-gray-100 py-2 text-xs flex items-center justify-between">  <span>{obj.name}</span>  </Link>
+                                                    <Link key={obj.path} to={`${obj.path}`} className="px-3 w-full hover:bg-gray-100 py-2 text-xs flex items-center justify-between">  <span>{obj.name}</span>  </Link>
                                                 )
                                             })}
                                         </ul>
@@ -99,14 +99,14 @@ function Navbar() {
                                         <ul className="overflow-hidde w-full flex flex-col items-start">
                                             {navItems[key].map((obj , index ) => {
                                                 return (
-                                                    <Link key={index} to={`${obj.path}`} onClick={() => setOpenSideNav(false)} className="px-3 w-full hover:bg-gray-100 py-2 text-xs ">  <span>{obj.name}</span>  </Link>
+                                                    <Link key={obj.path} to={`${obj.path}`} onClick={() => setOpenSideNav(false)} className="px-3 w-full hover:bg-gray-100 py-2 text-xs ">  <span>{obj.name}</span>  </Link>
                                                 )
                                             })}
                                         </ul>
                                     </motion.div>
                                 )}
                             </motion.li>
-                        </>
+                        
                     ))}
                 </ul>
             </nav>

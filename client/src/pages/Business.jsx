@@ -36,7 +36,7 @@ function Business() {
     <div>
           <div className='h-[300px] flex items-center justify-center'>
             <div className='w-full p-5 flex flex-col items-center bg-white/20 backdrop-blur-sm justify-center'>
-                <motion.span initial={{opacity : 0 , y : 50}} animate={{opacity : 1 , y : 0}} exit={{opacity : 0 , y : 50}} transition={{ ease :"easeInOut" ,duration : 0.3}} className='sm:mr-20 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-wider' >Business showcase</motion.span>
+                <motion.span initial={{opacity : 0 , y : 50}} animate={{opacity : 1 , y : 0}} exit={{opacity : 0 , y : 50}} transition={{ ease :"easeInOut" ,duration : 0.3}} className='sm:mr-20 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-wider' >Business Exhibition</motion.span>
             </div>
         </div>
 
@@ -122,12 +122,12 @@ function Business() {
                       <p className="text-orange-300; font-bold">
                         {item.ratings.average}★ ({item.ratings.total} reviews)
                       </p>
-                      <a
-                        href={`/business/${item._id}`}
+                      <Link
+                        to={`/business/${item._id}`}
                         className="bg-blue-500 text-white py-1 px-4 rounded hover:bg-blue-700"
                       >
                         View Details
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   ))}

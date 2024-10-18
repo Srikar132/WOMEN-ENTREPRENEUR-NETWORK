@@ -30,7 +30,7 @@ const storage = multer.diskStorage({
 
 router.post('/create-business',verifyToken,uploads.single("logoImage"),createBusiness)
 router.get('/get-all-business',getAllBusinesses)
-router.get('/getBusiness/:id',verifyToken,getBusinessById)
+router.get('/get-business/:id',verifyToken,getBusinessById)
 router.patch('/updateBusiness/:id',verifyToken,updateBusinessById)
 router.delete('/deleteBusiness/:id',verifyToken,deleteBusinessById)
 router.get('/search',verifyToken, searchBusinesses);

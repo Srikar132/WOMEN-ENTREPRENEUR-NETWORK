@@ -40,7 +40,7 @@ function Events() {
         <div>
             <div className='h-[300px] flex items-center justify-center'>
                 <div className='w-full p-5 flex flex-col items-center bg-white/20 backdrop-blur-sm justify-center'>
-                    <motion.span initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 50 }} transition={{ ease: "easeInOut", duration: 0.3 }} className='sm:mr-20 z-0 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-wider'>Events Organisation</motion.span>
+                    <motion.span initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 50 }} transition={{ ease: "easeInOut", duration: 0.3 }} className='sm:mr-20 z-0 text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-wider'>Elite Event Planners</motion.span>
                 </div>
             </div>
 

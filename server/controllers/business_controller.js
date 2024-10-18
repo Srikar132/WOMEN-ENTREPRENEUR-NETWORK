@@ -55,7 +55,7 @@ export const getAllBusinesses = async (req, res) => {
 export const getBusinessById = async (req, res) => {
     const businessId = req.params.id
     try {
-        const business = await Business.findById(businessId) ; 
+        const business = await Business.findById(businessId).populate("owner") ; 
         // console.log(businesses);
         
         res.status(200).json(business);
@@ -176,17 +176,17 @@ export const searchBusinesses = async (req, res) => {
 
 export const getReviewsById=async(req,res)=>{
     const businessId=req.params.id
-try{
-const business= await Business.findById(businessId)
-if (!business) {
-    return res.status(404).json({ message: 'Business not found' });
-}
-res.status(200).json({name:business.name,reviews:business.reviews})
-}
-catch{
-    console.error(error);
-        res.status(500).json({ message: 'Error fetching business reviews', error: error.message });
-}
+    try{
+        const business= await Business.findById(businessId).populate("reviews.user")
+        if (!business) {
+            return res.status(404).json({ message: 'Business not found' });
+        }
+        res.status(200).json({name:business.name,reviews:business.reviews})
+        }
+    catch{
+        console.error(error);
+            res.status(500).json({ message: 'Error fetching business reviews', error: error.message });
+    }
 }
 
 
