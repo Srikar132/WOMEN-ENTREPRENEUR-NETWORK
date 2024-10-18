@@ -12,6 +12,7 @@ export const GET_ALL_RESOURCE = 'api/resource/'
 export const GET_RESOURCE_BY_USERID = 'api/resource/get-resources-by-user-id'
 
 export const GET_ALL_BUSINESSES = 'api/business/get-all-business'
+export const GET_ALL_BUSINESS = 'api/business/get-business'
 export const POST_A_BUSINESS = 'api/business/create-business'
 export const GET_BUSINESSES_BY_USERID = 'api/business/get-businesses-by-user-id'
 
@@ -20,6 +21,7 @@ export const CREATE_A_EVENT = 'api/event/create-event'
 export const GET_EVENTS_BY_USERID = 'api/event/get-events-by-user-id-upcoming'
 export const GET_EVENTS_BY_USERID_COMPLETED = 'api/event/get-events-by-user-id-completed'
 export const UPDATE_VIRTUAL_LINK = 'api/event/update-virtual-link'
+export const DELETE_EVENT_BY_ID = 'api/event/delete-event'
 
 export const GET_ALL_JOBS = "api/job/get-jobs"
 export const GET_JOBS_BY_USER_ID = 'api/job/get-jobs-by-user-id'

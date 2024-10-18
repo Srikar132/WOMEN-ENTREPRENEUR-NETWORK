@@ -7,6 +7,7 @@ import { GET_USER_INFO } from './utils/constants';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const Business = React.lazy(() => import('./pages/Business'));
+const BusinessPage = React.lazy(() => import("./pages/BusinessPage"))
 const Login = React.lazy(() => import('./pages/Login'));
 const Register = React.lazy(() => import("./pages/Register"))
 const VerifyEmail = React.lazy(() => import("./pages/VerifyEmail"))
@@ -58,6 +59,7 @@ function App() {
         }
         toast.success(response.data.message);
         startTransition(() => setUserInfo(response.data.user));
+        console.log(response.data.user)
       } catch (error) {
         startTransition(() => setUserInfo(null));
       } finally {
@@ -90,6 +92,7 @@ function App() {
 
           <Route path="/business/all-business" element={<Business />} />
           <Route path="/business/post-business" element={<PrivateRoute><CreateBusiness /></PrivateRoute> } />
+          <Route path="/business/:id" element={<PrivateRoute><BusinessPage /></PrivateRoute> } />
 
           <Route path='/job' element={<JobList/>} />
           <Route path='/job/create' element={<CreateJob/>} />

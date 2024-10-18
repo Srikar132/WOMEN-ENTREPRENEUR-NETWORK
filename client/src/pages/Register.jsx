@@ -51,7 +51,6 @@ function Register() {
                 }
                 // 8985003051
                 toast.success(response.data.message);
-                setUserInfo(response.data.user);
                 setRegisterLoading(false);
                 navigate("/auth/verify-email")
             } catch (error) {
@@ -77,8 +76,8 @@ function Register() {
                     </div>
 
                     <img draggable="false" className="z-40 object-cover select-none pointer-events-none absolute left-[-10%] bottom-[-30%]" src={image2} alt="" />
-                    <img draggable="false" className="z-40 object-cover select-none pointer-events-none absolute right-5 bottom-9 h-96" src={image3} alt="" />
-                    <img draggable="false" className="z-40 object-cover select-none pointer-events-none absolute right-[-10%] top-[-5%] h-96" src={image1} alt="" />
+                    <img draggable="false" className="z-40 hidden xl:block object-cover select-none pointer-events-none absolute right-5 bottom-9 h-96" src={image3} alt="" />
+                    <img draggable="false" className="z-40  object-cover select-none pointer-events-none absolute right-[-10%] top-[-5%] h-96" src={image1} alt="" />
 
                     <div className="flex-1 z-50 flex justify-center items-center flex-col p-2 gap-5 w-[350px]">
                         <button className="w-full  flex items-center justify-between tracking-wider text-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white focus:border-blue-400 transition duration-200  text-white  bg-blue-600">

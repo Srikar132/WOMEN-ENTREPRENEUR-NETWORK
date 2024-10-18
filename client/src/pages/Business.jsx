@@ -34,6 +34,7 @@ function Business() {
       
       let queryString = `/api/business/search?`;
 
+
       if (searchTerm) {
         queryString += `name=${searchTerm}&`;
       }

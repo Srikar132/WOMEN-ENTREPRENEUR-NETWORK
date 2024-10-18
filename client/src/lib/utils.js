@@ -1,3 +1,14 @@
+import replay from "../assets/replay.svg"
+import pause from "../assets/pause.svg"
+import play from "../assets/replay.svg"
+import video1 from "../assets/videos/4065635-uhd_2732_1440_25fps.mp4"
+import video2 from "../assets/videos/5971786-uhd_2732_1440_25fps.mp4"
+import video3 from "../assets/videos/6774652-uhd_2560_1440_30fps.mp4"
+import video4 from "../assets/videos/7652013-uhd_2560_1440_30fps.mp4"
+
+export const replayImg = replay;
+export const pauseImg = pause;
+export const playImg = play;
 
 export const navItems = {
     
@@ -109,4 +120,49 @@ export  const eventTags = [
   ];
   
 
+  
+
+  export const hightlightsSlides = [
+    {
+      id: 1,
+      textLists: [
+        "Connect with industry leaders",
+        "Exclusive mentorship programs",
+        "Access to funding opportunities",
+      ],
+      video: video1,
+      videoDuration: 26,
+    },
+    {
+      id: 2,
+      textLists: [
+        "Workshops and skill-building events",
+        "Collaborative spaces for networking",
+        "Women-led success stories",
+      ],
+      video: video2,
+      videoDuration: 12,
+    },
+    {
+      id: 3,
+      textLists: [
+        "Personalized career development plans",
+        "Expert business insights and tips",
+        "Roundtable discussions with peers",
+      ],
+      video: video3,
+      videoDuration: 13,
+    },
+    {
+      id: 4,
+      textLists: [
+        "Online platform for resources and tools",
+        "Global community of women entrepreneurs",
+        "Flexible membership options",
+      ],
+      video: video4,
+      videoDuration: 10,
+    },
+  ];
+  
   

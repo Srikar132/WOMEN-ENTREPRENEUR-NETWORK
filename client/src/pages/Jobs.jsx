@@ -120,7 +120,7 @@ useEffect(() => {
             exit={{ opacity: 0, y: 50 }}
             transition={{ ease: "easeInOut", duration: 0.3 }}
             className='text-xl font-bold tracking-wider sm:mr-20 sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl'>
-            Job Showcase
+            Path Way to Employement
           </motion.span>
         </div>
       </div>
