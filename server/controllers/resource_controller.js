@@ -150,7 +150,7 @@ export const searchResource = async (req, res) => {
         const query = {};
 
         if (category) {
-            query.category = category;
+            query.category = {$regex : category , $options : "i"};
         }
 
         if (tags) {
@@ -159,19 +159,18 @@ export const searchResource = async (req, res) => {
         }
 
         if (title) {
-            query.$text = { $search: title }; 
+            query.title = {$regex : title , $options : "i"};
         }
 
-        const resources = await Resource.find(query, { score: { $meta: "textScore" } })
-        .sort({ score: { $meta: "textScore" } }) 
-        .exec();
+        const resources = await Resource.find(query)
 
         res.status(200).json(resources);
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching resources: ", error);
         res.status(500).json({ message: 'Error fetching resources', error: error.message });
     }
 };
+
 
 
 export const getResourcesByUserId = async (req, res) => {

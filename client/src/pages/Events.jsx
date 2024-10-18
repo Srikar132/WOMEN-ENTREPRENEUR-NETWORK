@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -5,10 +6,12 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { GET_ALL_EVENTS } from "../utils/constants";
 import { toast } from "react-toastify";
 import { apiClient } from "../lib/api-clinet";
-import image from "../assets/EVENTIMAGE.avif";
+import image from "../assets/WEMBG.jpg";
 import { format } from "date-fns";
+import axios from "axios";
 
 function Events() {
+
     const [searchTerm, setSearchTerm] = useState("");
     const [category, setCategory] = useState("");
     const [loading, setLoading] = useState(false);
@@ -18,12 +21,12 @@ function Events() {
         visible: { opacity: 1, y: 0 }
     };
 
+
     const getEvents = async () => {
         try {
             setLoading(true);
             const response = await apiClient.get(`${GET_ALL_EVENTS}`, { withCredentials: true });
             setEvents(response.data.events);
-            console.log(response.data);
         } catch (error) {
             toast.error(error.message);
             setEvents([]);
@@ -32,9 +35,46 @@ function Events() {
         }
     };
 
+    const searchEvents = async () => {
+        try {
+
+            setLoading(true);
+            let queryString = '/api/event/search?';
+        
+              if (searchTerm) {
+                queryString += `title=${searchTerm}&`;
+              }
+        
+            if (category) {
+               queryString += `category=${category}&`;
+            }
+            const uri=`http://localhost:8000${queryString}`
+            console.log(uri);
+            
+            console.log(queryString); 
+            const response = await axios.get(uri,{withCredentials : true});
+            setEvents(response.data.events)
+            setLoading(false);
+            console.log( "searched : " ,response.data)
+        } catch (error) {
+            toast.error("Error")
+            setLoading(false);
+            setEvents([]);
+        }
+      };
+    
+    
+    
     useEffect(() => {
         getEvents();
     }, []);
+
+
+    useEffect(() => {
+        searchEvents();
+      }, [searchTerm, category]);
+    
+    
 
     return (
         <div>
@@ -48,7 +88,12 @@ function Events() {
                 
                 <div className="flex flex-wrap gap-5 w-full items-center px-3 sm:px-9 md:px-32 lg:px-80 justify-between py-5">
                     <div className="">
-                        <select id="eventCategory" name="eventCategory" className="w-full flex-1 p-2 border border-gray-300 focus:outline-none focus:ring-4 cursor-pointer tracking-widest focus:ring-blue-400 focus:ring-offset-1 focus:ring-offset-white focus:border-blue-400 transition duration-200">
+                        <select id="eventCategory" 
+                          name="eventCategory"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                         className="w-full flex-1 p-2 border border-gray-300 focus:outline-none focus:ring-4 cursor-pointer tracking-widest focus:ring-blue-400 focus:ring-offset-1 focus:ring-offset-white focus:border-blue-400 transition duration-200">
+                            <option value="">Select a Category</option>
                             <option value="networking">Networking</option>
                             <option value="workshop">Workshop</option>
                             <option value="panel_discussion">Panel Discussion</option>
@@ -78,33 +123,33 @@ function Events() {
                     </div>
                 ) : (
                     <div className="flex flex-wrap w-full gap-5 px-3 sm:px-9 md:px-32 lg:px-80 py-5">
-                        {events?.map((event, index) => (
-                            <motion.div key={index} variants={cardVariants} initial="hidden" animate="visible" className="bg-white basis-[400px] rounded-lg shadow-lg p-5 transform transition-all duration-300 hover:shadow-xl hover:scale-[101%]">
-                                <img src={image} alt={"image"} className="h-50 w-50 object-contain mx-auto mb-4" />
+                        { typeof events === "object" &&  events.map((event) => (
+                       <motion.div key={event.id} variants={cardVariants} initial="hidden" animate="visible"
+                       className="bg-white basis-[400px] rounded-lg shadow-lg p-5 transform transition-all duration-300 hover:shadow-xl hover:scale-[101%]">
+                       <img src={image} alt={"image"} className="h-50 w-50 object-contain mx-auto mb-4" />
+                       <h1 className="text-xl font-semibold text-blue-600 mb-1">{event.title}</h1>
+                        <h1 className="text-xs">{event.description}</h1>
+                        <h2 className="text-xs font-bold text-black-300 mt-1">Category: {event.category}</h2>
+                        <h2 className="text-xs text-gray-500 font-medium mt-1">Location: <span className="text-blue-700">{event.location?.state + " , " + event.location?.country}</span></h2>
+                        <div className="flex my-4 items-center justify-between">
+            <button className="flex items-center text-black px-4 py-2 rounded-lg shadow transition duration-200">
+                <FaCalendarAlt className="mr-2" />
+                {(() => {
+                    try {
+                        const parsedDate = new Date(event.date);
+                        if (isNaN(parsedDate)) throw new Error("Invalid Date");
+                        return format(parsedDate, 'MMMM dd, yyyy');
+                    } catch (e) {
+                        console.error('Invalid date value:', event.date, e);
+                        return 'Date not available';
+                    }
+                })()}
+            </button>
+            <button className="flex items-center justify-center text-white px-5 py-2 bg-blue-500 rounded-lg transition duration-200 hover:bg-blue-600 mx-auto">Register</button>
+        </div>
+    </motion.div>
+))}
 
-                                <h1 className="text-xl font-semibold text-blue-600 mb-1">{event.title}</h1>
-                                <h1 className="text-xs">{event.description}</h1>
-                                <h2 className="text-xs font-bold text-black-300 mt-1">Category: {event.category}</h2>
-                                <h2 className="text-xs text-gray-500 font-medium mt-1">Location: <span className="text-blue-700">{event.location?.state + " , " + event.location?.country}</span></h2>
-
-                                <div className="flex my-4 items-center justify-between">
-                                    <button className="flex items-center text-black px-4 py-2 rounded-lg shadow transition duration-200">
-                                        <FaCalendarAlt className="mr-2" />
-                                        {(() => {
-                                            try {
-                                                const parsedDate = new Date(event.date);
-                                                if (isNaN(parsedDate)) throw new Error("Invalid Date");
-                                                return format(parsedDate, 'MMMM dd, yyyy');
-                                            } catch (e) {
-                                                console.error('Invalid date value:', event.date, e);
-                                                return 'Date not available';
-                                            }
-                                        })()}
-                                    </button>
-                                    <button className="flex items-center justify-center text-white px-5 py-2 bg-blue-500 rounded-lg transition duration-200 hover:bg-blue-600 mx-auto">Register</button>
-                                </div>
-                            </motion.div>
-                        ))}
                     </div>
                 )}
             </div>
