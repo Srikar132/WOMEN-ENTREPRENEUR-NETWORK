@@ -11,7 +11,7 @@ export const createBusiness = async (req, res) => {
         }
         const { name, description, category, website, country , state  , tags } = req.body;
         const owner= req.userId;
-        console.log(req.body)
+
         const filePath = req.file.path.replace(/\\/g , '/');
         const newBusiness = new Business({
             name,
@@ -293,4 +293,22 @@ export const deleteReviewsById = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Error deleting review', error: error.message });
     }
+};
+
+export const getBusinessByUserId = async (req, res) => {
+    const userId = req.userId;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const businesses = await Business.find({ 'owner': userId });
+
+        res.status(200).json(businesses);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error at fetching business', error: error.message });
+    }
 };

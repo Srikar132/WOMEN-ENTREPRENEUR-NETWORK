@@ -142,6 +142,7 @@ export const deleteBusinessById = async (req, res) => {
         res.status(500).json({ message: 'Error deleting Resource', error: error.message });
     }
 };
+
 export const searchResource = async (req, res) => {
     const { category, tags, title } = req.query;
 
@@ -169,5 +170,19 @@ export const searchResource = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error fetching resources', error: error.message });
+    }
+};
+
+
+export const getResourcesByUserId = async (req, res) => {
+    const userId = req.userId;
+    console.log("Hello ")
+    try {
+        const resources = await Resource.find({ 'author': userId });
+
+        return res.status(200).json(resources);
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).json({ message: 'Error at fetching job', error: error.message });
     }
 };

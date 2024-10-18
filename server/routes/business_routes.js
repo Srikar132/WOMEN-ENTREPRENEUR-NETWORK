@@ -1,7 +1,7 @@
 import { Router } from "express";
 import multer from "multer"
 import { verifyToken } from "../middlewares/verifyToken.js";
-import { createBusiness,
+import { getBusinessByUserId , createBusiness,
      getAllBusinesses,
       getBusinessById,
       updateBusinessById,
@@ -38,5 +38,6 @@ router.get('/getReviewsById/:id',verifyToken, getReviewsById);
 router.post('/addReview/:id',verifyToken,addReviewsById);
 router.patch('/editReview/:reviewid',verifyToken,editReviewsById);
 router.delete('/deleteReview/:reviewid',verifyToken,deleteReviewsById);
+router.get('/get-businesses-by-user-id',verifyToken,getBusinessByUserId)
 
 export default router

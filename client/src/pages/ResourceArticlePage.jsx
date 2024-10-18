@@ -75,6 +75,7 @@ function ResourceArticlePage() {
                 <Link className="text-blue-400 hover:text-blue-500 hover:underline">article 21</Link>
                 <Link className="text-blue-400 hover:text-blue-500 hover:underline">article 3</Link>
             </div>
+            
         </div>
     </div>
   )
