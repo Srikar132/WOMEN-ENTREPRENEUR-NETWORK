@@ -25,5 +25,5 @@ export const DELETE_EVENT_BY_ID = 'api/event/delete-event'
 
 export const GET_ALL_JOBS = "api/job/get-jobs"
 export const GET_JOBS_BY_USER_ID = 'api/job/get-jobs-by-user-id'
-
 export const GET_ALL_COMMUNITY_MESSAGES = "/api/message/get-community-messages"
+export const GET_JOBS_BY_LOC = "api/job/get-jobs"

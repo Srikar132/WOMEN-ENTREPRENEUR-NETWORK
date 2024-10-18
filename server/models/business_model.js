@@ -10,7 +10,27 @@ const getISTTime = () => {
 const businessSchema = new mongoose.Schema({
     name : {type : String , required : true } ,
     description : {type : String , required : true } ,
-    category : {type : String , required : true , index : true} ,
+    category : {type : String , required : true , index : true,
+        enum:[
+            "Success Stories",
+            "Leadership Development",
+            "Business Funding",
+            "Marketing Strategies",
+            "Networking Tips",
+            "Work-Life Balance",
+            "Mentorship",
+            "Personal Branding",
+            "Startup Guides",
+            "Social Impact",
+            "Tech Innovation",
+            "Financial Literacy",
+            "Scaling Your Business",
+            "E-commerce Strategies",
+            "Women in Leadership",
+            "Self-Care for Entrepreneurs"
+       
+        ]
+    } ,
     website : String ,
     owner : {type : mongoose.Schema.Types.ObjectId , ref : "User" , required : true} ,
     location : {
