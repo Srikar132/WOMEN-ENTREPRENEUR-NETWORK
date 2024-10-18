@@ -1,4 +1,6 @@
 import { Event } from "../models/event_model.js";
+import { User } from "../models/user_model.js";
+
 
 export const createEvent = async (req, res) => {
     try {
@@ -162,3 +164,21 @@ export const searchEvents = async (req , res) => {
         return res.status(500).json({message: "Error searching events", error: error.message});
     }
 }
+export const getEventsByUserId = async (req, res) => {
+    const userId = req.userId;
+    console.log(userId);
+    
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const Events = await Event.find({ 'createdBy': userId });
+
+        res.status(200).json(Events);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error at fetching business', error: error.message });
+    }
+};

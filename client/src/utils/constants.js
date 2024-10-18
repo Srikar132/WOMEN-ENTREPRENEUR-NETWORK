@@ -17,3 +17,4 @@ export const GET_ALL_EVENTS =  `api/event/upcoming-events`
 export const CREATE_A_EVENT = 'api/event/create-event'
 
 export const GET_ALL_JOBS = "api/job/get-jobs"
+export const GET_JOBS_BY_LOC = "api/job/get-jobs"

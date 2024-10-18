@@ -26,6 +26,9 @@ export const createBusiness = async (req, res) => {
 
         const savedBusiness = await newBusiness.save();
 
+
+        
+
         res.status(200).json({
             success:true,
             message: "Business created successfully",
@@ -149,24 +152,28 @@ export const searchBusinesses = async (req, res) => {
     const { category, tags, name } = req.query; 
 
     try {
-       
         const query = {};
 
+        // If category is present, add it to the query
         if (category) {
-            query.category = category;
+            query.category = { $regex: category, $options: "i" };
         }
 
+        // If tags are present, add the tags filter to the query
         if (tags) {
             const tagsArray = tags.split(',').map(tag => tag.trim());
-            query.tags = { $in: tagsArray }; 
+            query.tags = { $in: tagsArray.map(tag => new RegExp(tag, 'i')) };
         }
 
+        // If name is present, add the name filter to the query
         if (name) {
-            query.$text = { $search: name };  
+            query.name = { $regex: name, $options: "i" };
         }
 
+        // Fetch businesses based on the query
         const businesses = await Business.find(query);
 
+        // Return the fetched businesses
         res.status(200).json(businesses);
     } catch (error) {
         console.error(error);
@@ -292,5 +299,24 @@ export const deleteReviewsById = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error deleting review', error: error.message });
+    }
+};
+
+export const getBusinessByUserId = async (req, res) => {
+    const userId = req.userId;
+    console.log(userId);
+    
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const businesses = await Business.find({ 'owner': userId });
+
+        res.status(200).json(businesses);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error at fetching business', error: error.message });
     }
 };

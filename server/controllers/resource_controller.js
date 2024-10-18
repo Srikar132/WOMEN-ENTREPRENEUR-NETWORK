@@ -148,22 +148,26 @@ export const searchResource = async (req, res) => {
     try {
         const query = {};
 
+        // Category filter with regex (case-insensitive)
         if (category) {
-            query.category = category;
+            query.category = { $regex: category, $options: "i" };
         }
 
+        // Tags filter (matching any of the provided tags)
         if (tags) {
             const tagsArray = tags.split(',').map(tag => tag.trim());
-            query.tags = { $in: tagsArray };
+            query.tags = { $in: tagsArray }; // No regex needed, we match exact tags
         }
 
+        // Title filter with full-text search or regex (if text search is configured)
         if (title) {
-            query.$text = { $search: title }; 
+            query.$text = { $search: title };  // For full-text search on title
         }
 
-        const resources = await Resource.find(query, { score: { $meta: "textScore" } })
-        .sort({ score: { $meta: "textScore" } }) 
-        .exec();
+        // Find resources and sort by text score if title search is used
+        const resources = await Resource.find(query, title ? { score: { $meta: "textScore" } } : {})
+            .sort(title ? { score: { $meta: "textScore" } } : {})
+            .exec();
 
         res.status(200).json(resources);
     } catch (error) {
