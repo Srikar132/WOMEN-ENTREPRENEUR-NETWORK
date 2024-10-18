@@ -37,28 +37,28 @@ function Home({ userInfo }) {
       
       <div className="flex flex-col min-h-screen">
 
-        <div className="container mx-auto flex flex-col gap-5 items-center">
-            <div className='wifull  flex gap-10 items-center justify-center py-10 '>
-                <div className='text-2xl uppercase italic  font-thin font'>Welcome to <br /> <span className="text-blue-500 font-semibold text-4xl md:text-6xl">women </span> <br />  <span className="text-blue-500 font-semibold text-4xl md:text-6xl">entrepreneurs</span> <br />   <span className="text-blue-500 font-semibold text-4xl md:text-6xl">network </span></div>
+        <div className="container flex flex-col items-center gap-5 mx-auto">
+            <div className='flex items-center justify-center gap-10 py-10 wifull '>
+                <div className='text-2xl italic font-thin uppercase font'>Welcome to <br /> <span className="text-4xl font-semibold text-blue-500 md:text-6xl">women </span> <br />  <span className="text-4xl font-semibold text-blue-500 md:text-6xl">entrepreneurs</span> <br />   <span className="text-4xl font-semibold text-blue-500 md:text-6xl">network </span></div>
             </div>
-            <div className="flex md:flex-row-reverse  items-center justify-center  flex-wrap  p-5">
-              <div className="rounded-full border h-44 w-44 overflow-hidden">
+            <div className="flex flex-wrap items-center justify-center p-5 md:flex-row-reverse">
+              <div className="overflow-hidden border rounded-full h-44 w-44">
                   <img src={home1} className="object-cover" alt="" />
               </div> 
               <p className=' font-thin basis-[400px]'>Join a vibrant community dedicated to empowering women to achieve their entrepreneurial dreams. At the Women Entrepreneurs Network, we foster collaboration and support, creating an inspiring environment for personal and professional growth.</p>
             </div>
-            <div className="flex  items-center justify-center  flex-wrap  p-5">
-              <div className="rounded-full border h-44 w-44 overflow-hidden">
+            <div className="flex flex-wrap items-center justify-center p-5">
+              <div className="overflow-hidden border rounded-full h-44 w-44">
                   <img src={home2} className="object-cover" alt="" />
               </div> 
               <p className=' font-thin basis-[400px]'>Network with like-minded women from diverse industries and backgrounds, sharing ideas and experiences. Together, we cultivate a space where innovation thrives, and every voice is heard—join us and elevate your entrepreneurial journey today!</p>
             </div>
         </div>
 
-        <section id="highlights" className='w-screen h-full bg-zinc overflow-hidden common-padding '>
+        <section id="highlights" className='w-screen h-full overflow-hidden bg-zinc common-padding '>
           <div className='screen-max-width '>
-            <div className='mb-12 md:flex items-ends justify-between w-full'>
-              <h1 id="title" className='text-black uppercase text-3xl '>GET highlights OF THIS WEBSITE</h1>
+            <div className='justify-between w-full mb-12 md:flex items-ends'>
+              <h1 id="title" className='text-3xl text-black uppercase '>GET highlights OF THIS WEBSITE</h1>
             </div>
             <VideoCourousal/>
           </div>
@@ -69,16 +69,16 @@ function Home({ userInfo }) {
           whileInView={{ opacity: 1, x: 0 }} 
           transition={{ duration: 0.5 }} 
           exit={{ opacity: 0, x: 100 }}
-          className=" rounded-lg  p-8 flex flex-col items-center justify-center max-w-7xl mx-auto mt-20 transition-transform duration-300 "
+          className="flex flex-col items-center justify-center p-8 mx-auto mt-20 transition-transform duration-300 rounded-lg  max-w-7xl"
         >
-          <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
+          <h2 className="mb-2 text-2xl font-bold text-center text-gray-800">
             Would you like to join us?
           </h2>
-          <p className="text-gray-600 text-center mb-4">
+          <p className="mb-4 text-center text-gray-600">
             Join us to be a part of something special. We value community and collaboration!
           </p>
           <motion.button
-            className="bg-blue-600 uppercase tracking-wider text-white rounded-md px-6 py-3 hover:bg-blue-400 transition duration-300 font-normal"
+            className="px-6 py-3 font-normal tracking-wider text-white uppercase transition duration-300 bg-blue-600 rounded-md hover:bg-blue-400"
             whileHover={{ scale: 1.05 }} 
             whileTap={{ scale: 0.95 }}
           >
@@ -86,10 +86,10 @@ function Home({ userInfo }) {
           </motion.button>
         </motion.div>
 
-        <div className="mt-10 p-5 flex flex-col items-center justify-center gap-16">
+        <div className="flex flex-col items-center justify-center gap-16 p-5 mt-10">
           <AnimatePresence>
             {features.map((feature, index) => (
-              <div key={feature.title} className='flex flex-col odd:flex-row-reverse flex-wrap lg:flex-row items-center justify-center gap-10 md-gap-44 w-full lg:w-3/4 mx-auto'>
+              <div key={feature.title} className='flex flex-col flex-wrap items-center justify-center w-full gap-10 mx-auto odd:flex-row-reverse lg:flex-row md-gap-44 lg:w-3/4'>
                 <motion.img 
                   initial={{ opacity: 0, x: index %  2== 0 ? 200 : -200 }} 
                   whileInView={{ opacity: 1, x: 0 }} 
@@ -104,11 +104,11 @@ function Home({ userInfo }) {
                   whileInView={{ opacity: 1, x: 0 }} 
                   transition={{ duration: 0.7,ease:"easeInOut" }} 
                   exit={{ opacity: 0, x: index % 2==0 ? -200 : 200  }}
-                  className="border border-gray-300 bg-blue-50 rounded-lg shadow-md p-5 hover:shadow-lg transition-shadow duration-300 max-w-xs w-full"
+                  className="w-full max-w-xs p-5 transition-shadow duration-300 border border-gray-300 rounded-lg shadow-md bg-blue-50 hover:shadow-lg"
                 >
                   <h3 className="text-xl font-normal text-center text-blue-600">{feature.title}</h3>
                   <p className='mt-2 text-gray-700 font-italic text-md'>"{feature.quotation}"</p>
-                  <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                  <p className="mt-4 text-sm leading-relaxed text-gray-600">
                     {feature.description}
                   </p>
                 </motion.div>
@@ -122,11 +122,11 @@ function Home({ userInfo }) {
           initial={{ opacity: 0, scale: 0.8 }} 
           animate={{ opacity: 1, scale: 1 }} 
           transition={{ duration: 0.5 }} 
-          className="bg-blue-500 opac place-items-center grid grid-cols-3 gap-5 text-white p-10 rounded-lg shadow-lg mt-20   "
+          className="grid grid-cols-3 gap-5 p-10 mt-20 text-white bg-blue-500 rounded-lg shadow-lg opac place-items-center "
         >
-          <div className=" flex flex-col col-span-2">
+          <div className="flex flex-col col-span-2 ">
             <h2 className="text-3xl font-bold">How We're Different</h2>
-            <p className="text-BLACK text-lg mt-4">
+            <p className="mt-4 text-lg text-BLACK">
             At FEMPOWER, we go beyond just offering a platform for women entrepreneurs to connect.
             We’re creating a space that’s truly empowering and inclusive, designed specifically 
             to meet the unique needs of women in business. Here's how we stand out
@@ -145,16 +145,16 @@ function Home({ userInfo }) {
                 initial={{opacity : 0 , y : 50}}
                 animate={{opacity : 1 , y : 0}} exit={{opacity : 0 , y : 50}} transition={{ ease :"easeInOut" ,duration : 0.3}}
             className="bg-white col-span-1 flex flex-col   gap-5 border text-black border-gray-200 shadow-lg p-6 w-[400px]">
-                <div className="overflow-hidden  flex items-center justify-center">
+                <div className="flex items-center justify-center overflow-hidden">
                     <img
                         src={image}
-                        className="object-cover w-full h-full  bg-cover bg-center" 
+                        className="object-cover w-full h-full bg-center bg-cover" 
                         alt="women empowerment"
                         />
                 </div>
                 <h1 className="text-2xl">Get the happiness you deserve</h1>
                 <p>No matter the challenge, you don't have to face it alone - but it’s up to you to take the first step.</p>
-                <Link to={"/auth/register"} className="w-full flex items-center justify-center tracking-wider text-xl focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white focus:border-blue-400 transition duration-200  text-white py-2 bg-blue-600">
+                <Link to={"/auth/register"} className="flex items-center justify-center w-full py-2 text-xl tracking-wider text-white transition duration-200 bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-white focus:border-blue-400">
                     Join us
                 </Link>
             </motion.div>

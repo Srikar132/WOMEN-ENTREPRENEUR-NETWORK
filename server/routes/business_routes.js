@@ -1,7 +1,7 @@
 import { Router } from "express";
 import multer from "multer"
 import { verifyToken } from "../middlewares/verifyToken.js";
-import { getBusinessByUserId , createBusiness,
+import {  createBusiness,
      getAllBusinesses,
       getBusinessById,
       updateBusinessById,
