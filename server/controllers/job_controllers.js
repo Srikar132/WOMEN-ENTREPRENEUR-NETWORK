@@ -1,9 +1,11 @@
 import { Job } from "../models/job_model.js";
+import { User } from "../models/user_model.js";
+
 
 export const createJob = async (req , res) => {
 
     try {
-        const {title , description , salary = "N/A" , employmentType , location = "N/A" ,category } = req.body;
+        const {title , description , salary = "N/A" , employmentType , country,state,city ,category } = req.body;
 
 
         if(!title || !description || !employmentType || !category) {
@@ -13,10 +15,12 @@ export const createJob = async (req , res) => {
         const newJob = await Job.create({
             title ,
             description ,
+            country,
+            state,
+            city,
             category ,
             employer : req.userId ,
             employmentType ,
-            location ,
             salary
         });
 
@@ -206,3 +210,76 @@ export const updateStatus = async (req , res) => {
         return res.status(500).json({message: "Error updating status", error: error.message});
     }
 }
+
+
+export const searchJob = async (req, res) => {
+    const { category, tags, title, location, companyName } = req.query;
+
+    try {
+        const query = {};
+
+        if (category) {
+            query.category = { $regex: category, $options: "i" };
+        }
+
+        if (tags) {
+            const tagsArray = tags.split(',').map(tag => tag.trim());
+            query.tags = { $in: tagsArray }; // No regex needed, exact match for tags
+        }
+
+        if (title) {
+            query.$text = { $search: title };  // Full-text search for job title
+        }
+
+        if (location) {
+            query.location = { $regex: location, $options: "i" };
+        }
+
+        if (companyName) {
+            query.companyName = { $regex: companyName, $options: "i" };
+        }
+
+        const jobs = await Job.find(query, title ? { score: { $meta: "textScore" } } : {})
+            .sort(title ? { score: { $meta: "textScore" } } : {})
+            .exec();
+
+        res.status(200).json(jobs);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error fetching jobs', error: error.message });
+    }
+};
+
+export const getJobByUserId = async (req, res) => {
+    const userId = req.userId;
+    console.log(userId);
+    
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const jobs = await Job.find({ 'employer': userId });
+
+        res.status(200).json(jobs);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error at fetching business', error: error.message });
+    }
+};
+export const getJobByLoc = async (req, res) => {
+    const {district}=req.params 
+    console.log(">>>>",district);
+       
+    try {
+       
+        const jobs = await Job.find({ 'city':district });
+
+        res.status(200).json(jobs);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error at fetching business', error: error.message });
+    }
+};
+
