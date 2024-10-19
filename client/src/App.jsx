@@ -78,7 +78,7 @@ function App() {
       <Suspense fallback={<>Component loading....</>}>
         <Routes>
           <Route path="/loc" element={<GetLocation />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home/>} />
           <Route path="/auth/login" element={<AuthRoute><Login /></AuthRoute>} />
           <Route path="/auth/register" element={<AuthRoute><Register /></AuthRoute>} />
           <Route path="/auth/verify-email" element={<VerifyEmail/>} />
