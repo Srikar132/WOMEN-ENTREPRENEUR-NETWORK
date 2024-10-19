@@ -2,21 +2,42 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaCalendarAlt } from "react-icons/fa";
-import { GET_ALL_EVENTS } from "../utils/constants";
+import { GET_ALL_EVENTS, REGISTER_ROUTE, REGISTER_TO_EVENT } from "../utils/constants";
 import { toast } from "react-toastify";
 import { apiClient } from "../lib/api-clinet";
 import image from "../assets/EVENTIMAGE.avif";
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
+import { AiOutlineClose  , AiOutlineLink} from "react-icons/ai";
 
 function Events() {
     const [searchTerm, setSearchTerm] = useState("");
     const [category, setCategory] = useState("");
     const [loading, setLoading] = useState(false);
     const [events, setEvents] = useState([]);
+    const [showCard , setShowCard] = useState(false);
+    const [selectedEventId , setSelectedEventId] = useState(null);
+
     const cardVariants = {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0 }
     };
+
+    const registerForEvent = async () => {
+            await apiClient.post(`${REGISTER_TO_EVENT}/${selectedEventId}/register` , {} , {withCredentials : true})
+            .then((response) => {
+                if(!response.data.success) {
+                    toast.error(response.data.message);
+                    return ;
+                }
+                toast.success(response.data.message);
+                setSelectedEventId(false);
+                setSelectedEventId(null)
+                setShowCard(false);
+            }) .catch((error) => toast.error(error.message))
+
+    }
+
 
     const getEvents = async () => {
         try {
@@ -101,13 +122,38 @@ function Events() {
                                             }
                                         })()}
                                     </button>
-                                    <button className="flex items-center justify-center text-white px-5 py-2 bg-blue-500 rounded-lg transition duration-200 hover:bg-blue-600 mx-auto">Register</button>
+                                    <button onClick={()=>{
+                                        setSelectedEventId(event._id);
+                                        setShowCard(true);
+                                    }} className="flex items-center justify-center text-white px-5 py-2 bg-blue-500 rounded-lg transition duration-200 hover:bg-blue-600 mx-auto">Register</button>
                                 </div>
                             </motion.div>
                         ))}
                     </div>
                 )}
             </div>
+
+            {showCard && (
+                <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/30 backdrop-blur-sm flex items-center justify-center">
+                <motion.div
+                                    initial={{opacity : 0 , scale : 0}}
+                                    animate={{opacity : 1 , scale : 1}}
+                                    exit={{opacity : 0 , scale : 0}}
+                                    transition={{duration : 0.5 , ease : "backInOut"} }
+                className='bg-white rounded-lg p-5 flex flex-col'
+                >
+                <div className='text-xl uppercase text-center'>ARE YOU SURE  </div>
+                <div className='text-xs uppercase text-center'>you want to register this event ? </div>
+                <div className='flex justify-between gap-2 mt-4'>
+                    <button onClick={() => {setShowCard(false) , setSelectedEventId(null)}} className='rounded-lg border border-gray-200 uppercase   px-3 py-2'>cancel </button>
+                    <button onClick={() => registerForEvent()} type="submit" className=" px-4 float- rounded-lg w-fit flex items-center justify-center bg-blue-500 text-white py-2 hover:bg-blue-600">
+                                        {loading ? <div className="w-[25px] h-[25px] rounded-full border-[2px] border-dotted border-gray-200 border-t-black animate-spin transition-all duration-200" /> : "register"}
+                    </button>
+                </div>
+                </motion.div>
+            </div>
+            )}
+
         </div>
     );
 }

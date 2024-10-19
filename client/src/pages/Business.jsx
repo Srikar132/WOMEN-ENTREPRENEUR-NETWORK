@@ -100,7 +100,7 @@ function Business() {
                     <Link className="text-2xl font-bold text-blue-800 mb-2">
                       {item.name}
                     </Link>
-                    <p className="text-gray-700 mb-4">{item.description}</p>
+                    <p className="text-gray-700 mb-4">{item.description.slice(0 , 30) + " ..."}</p>
                     <p className="text-sm font-semibold text-gray-500">
                       Category: {item.category}
                     </p>

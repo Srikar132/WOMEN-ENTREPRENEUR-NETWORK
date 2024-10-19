@@ -129,7 +129,7 @@ export  const eventTags = [
         "Exclusive mentorship programs",
         "Access to funding opportunities",
       ],
-      video: video1,
+      video: video4,
       videoDuration: 26,
     },
     {
@@ -159,7 +159,7 @@ export  const eventTags = [
         "Global community of women entrepreneurs",
         "Flexible membership options",
       ],
-      video: video4,
+      video: video1,
       videoDuration: 10,
     },
   ];

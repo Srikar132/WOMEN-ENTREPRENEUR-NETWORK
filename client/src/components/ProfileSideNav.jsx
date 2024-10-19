@@ -44,12 +44,14 @@ function ProfileSideNav({openProfileSideNav , setOpenProfileSideNav}) {
 
         </div>
         <hr />
-        <div className="w-full flex flex-col gap-1">
-            <Link onClick={() => setOpenProfileSideNav(false)} to={"/your-businesses"} className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineMoneyCollect/> your businesses </Link>
-            <Link  onClick={() => setOpenProfileSideNav(false)} to={"/your-events"}className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineFundProjectionScreen/> your events </Link>
-            <Link onClick={() => setOpenProfileSideNav(false)} to={"/your-resources"} className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineBook/> your resources </Link>
-            <Link onClick={() => setOpenProfileSideNav(false)} to={"/your-jobs"} className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineAccountBook/> your job posts </Link>
-        </div>
+        {userInfo?.role === "admin" || userInfo?.role === "entrepreneur" && (
+            <div className="w-full flex flex-col gap-1">
+                <Link onClick={() => setOpenProfileSideNav(false)} to={"/your-businesses"} className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineMoneyCollect/> your businesses </Link>
+                <Link  onClick={() => setOpenProfileSideNav(false)} to={"/your-events"}className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineFundProjectionScreen/> your events </Link>
+                <Link onClick={() => setOpenProfileSideNav(false)} to={"/your-resources"} className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineBook/> your resources </Link>
+                <Link onClick={() => setOpenProfileSideNav(false)} to={"/your-jobs"} className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiOutlineAccountBook/> your job posts </Link>
+            </div>
+        )}
         <hr />
         <div className="w-full flex flex-col gap-1">
             <Link className="w-full px-2 py-1 flex gap-2 items-center text-xl  rounded-lg hover:bg-gray-200 transition-all duration-150 "> <AiFillSetting/> settings </Link>
