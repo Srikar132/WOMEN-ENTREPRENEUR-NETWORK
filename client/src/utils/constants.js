@@ -29,7 +29,6 @@ export const GET_JOBS_BY_USER_ID = 'api/job/get-jobs-by-user-id'
 
 export const REGISTER_TO_EVENT = "api/event/"
 
-export const GET_ALL_COMMUNITY_MESSAGES = "/api/message/get-community-messages"
 
 export const GET_ALL_COMMUNITY_MESSAGES = "/api/message/get-community-messages"
 export const GET_JOBS_BY_LOC = "api/job/get-jobs"

@@ -63,16 +63,13 @@ const JobList = () => {
   };
 
 
-// useEffect(() => {
-//   if(city)
-//     getJobsbyLoc()
-// }, [city])
+useEffect(() => {
+  if(city)
+    getJobsbyLoc()
+}, [city])
 
   
-useEffect(() => {
- getAllJobs()
-  }
-, [])
+
 
 
   const getJobsbyLoc = async () => {
@@ -161,8 +158,8 @@ useEffect(() => {
           <div className="mb-6 text-center">
             <button 
               className="px-4 py-2 font-sans text-xl font-semibold text-blue-600 transition-all duration-300 ease-in-out border-2 border-blue-600 rounded-lg cursor-pointer hover:bg-blue-600 hover:text-white" 
-              onClick={getJobsbyLoc}>
-              Get Jobs Near Me
+              onClick={getAllJobs}>
+              Get All Jobs
             </button>
             </div>
           <div className="space-y-4">

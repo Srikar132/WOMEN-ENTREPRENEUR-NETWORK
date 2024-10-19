@@ -39,7 +39,8 @@ function Home({ userInfo }) {
       
       <div className="flex flex-col min-h-screen z-0 pointer-events-none">
 
-        <div className="w-full h-screen flex flex-wrap gap-3 relative">
+        <div className="w-full h-screen mt-20
+         flex flex-wrap gap-3 relative">
           <div  className='flex-1 flex items-center justify-center'>
             <motion.div initial={{opacity : 0 , x : -10 , y : -10}} animate={{opacity : 1 , x : 0 , y  : 0 }} transition={{duration : 0.2 , ease : "easeInOut"}} className='flex flex-col'>
               <span className='text-7xl uppercase font-bold tracking-wider'>WOMEN</span>
@@ -56,7 +57,8 @@ function Home({ userInfo }) {
               </div> 
             </motion.div>
           </div>
-          <div className='flex-1 place-self-center'>
+          <div className='flex-1 place-self-center 
+          '>
               <img src={home1} alt="" />
           </div>
           <div className="absolute bottom-[54px] left-0">
@@ -70,7 +72,7 @@ function Home({ userInfo }) {
           </div>
         </div>
 
-        <div className='w-full h-screen flex flex-wrap gap-3 relative'>
+        <div className='w-full h-screen flex flex-wrap gap-3  relative'>
           <div className="flex items-center justify-center  flex-1">
             <div className='flex flex-col flex-wrap gap-5 '>
               <div className='text-3xl uppercase text-blue-500 tracking-wider'>WHAT IS WEN ?</div>
