@@ -92,6 +92,7 @@ export const verifyEmail = async (req , res) => {
 
 export const login = async (req , res) => {
     const {email , password} = req.body;
+    
     try {
         const user = await User.findOne({email}) ;
 
@@ -241,4 +242,30 @@ export const updateProfile = async (req , res ) => {
         console.log("Error in reset password" ,  error) ;
         return res.status(400).json({error : error.message})
     }
+}
+
+export const GoogleAuth=async(req,res)=>{
+const {email}=req.body
+
+try {
+    const user = await User.findOne({email}) ;
+    if(!user) {
+        throw new Error("Unauthrized");
+    }
+    generateTokenAndSetCookie(res , user._id) ;
+    user.lastLogin = Date.now();
+    await user.save();
+    return res.status(200).json({
+        success : true,
+        message : "Logged in successfully" ,
+        user : {
+            ...user._doc ,
+            password : undefined
+}})
+}
+catch{
+
+}
+
+
 }
