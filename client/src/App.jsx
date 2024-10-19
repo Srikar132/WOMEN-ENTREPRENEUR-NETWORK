@@ -23,12 +23,14 @@ const JobDetails = React.lazy(() => import('./pages/JobDetail'))
 const YourBusinesses = React.lazy(() => import('./pages/YourBusinesses'))
 const YourEvent = React.lazy(() => import('./pages/YourEvent'))
 const YourJobs = React.lazy(() => import('./pages/YourJobs'))
+const JSTLMeet = React.lazy(() => import("./pages/EventPage"))
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProfileSetup from './pages/ProfileSetup';
 import Profile from './pages/Profile';
 import YourResource from './pages/YourResource';
+import EventPage from './pages/EventPage';
 import CreateJob from './pages/CreateJob';
 import GetLocation from './components/GetLocation';
 
@@ -40,6 +42,11 @@ const AuthRoute = ({ children }) => {
 const PrivateRoute = ({ children }) => {
   const { userInfo } = useStore();
   return !!userInfo ? children : <Navigate to="/auth/login" />;
+};
+const VisitorPrivateRoute = ({ children }) => {
+  const { userInfo } = useStore();
+
+  return !!userInfo ? ( userInfo?.role === "visitor" ? (toast.error("Access denied") ,   <Navigate to={"/"} />) : children) : <Navigate to="/" />;
 };
 
 
@@ -91,7 +98,7 @@ function App() {
           <Route path='/your-jobs' element={<PrivateRoute><YourJobs/></PrivateRoute> }/>
 
           <Route path="/business/all-business" element={<Business />} />
-          <Route path="/business/post-business" element={<PrivateRoute><CreateBusiness /></PrivateRoute> } />
+          <Route path="/business/post-business" element={<PrivateRoute><VisitorPrivateRoute><CreateBusiness /></VisitorPrivateRoute></PrivateRoute> } />
           <Route path="/business/:id" element={<PrivateRoute><BusinessPage /></PrivateRoute> } />
 
           <Route path='/job' element={<JobList/>} />
@@ -100,10 +107,11 @@ function App() {
 
           <Route path='/resource/articles' element={<ResourceArticle/>}/>
           <Route path='/resource/articles/:id' element={<ResourceArticlePage/>}/>
-          <Route path='/resource/post-articles' element={<PrivateRoute><PostArticle/></PrivateRoute> }/>
+          <Route path='/resource/post-articles' element={<PrivateRoute> <VisitorPrivateRoute><PostArticle/></VisitorPrivateRoute></PrivateRoute> }/>
 
           <Route path='/events/all-events' element={<Events/>}/>
-          <Route path='/events/host-event' element={<PrivateRoute><HostEvent/></PrivateRoute>}/>
+          <Route path='/events/host-event' element={<PrivateRoute> <VisitorPrivateRoute><HostEvent/></VisitorPrivateRoute> </PrivateRoute>}/>
+          <Route path='/event/:id' element={<PrivateRoute><EventPage/></PrivateRoute>}/>
           <Route path='*' element={<>404 NOT FOUND</>}/>
         </Routes>
       </Suspense>

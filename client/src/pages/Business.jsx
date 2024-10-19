@@ -109,6 +109,7 @@ function Business() {
             </select>
           </div>
 
+
           <div className="flex items-center justify-center">
             <input
               value={searchTerm}

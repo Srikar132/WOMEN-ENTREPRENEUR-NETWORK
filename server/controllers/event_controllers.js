@@ -117,6 +117,7 @@ export const registerForAnEvent = async (req, res) => {
         const {eventId} = req.params;
         const userId = req.userId;
         const event = await Event.findById(eventId);
+        
         if (!event) {
             return res.status(400).json({message: "Event not found", success: false});
         }

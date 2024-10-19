@@ -110,13 +110,7 @@ function YourEvent() {
                 <span className='uppercase text-xs'>{event?.description}</span>
               </div>
               <div className='flex gap-3'>
-                  {event?.virtualLink ? (
-                    <>
-                      <span className='text-xs uppercase'>LINK UPLOADED </span>
-                    </>
-                  ) : (
-                    <button onClick={() => {setSelectedEventId(event?._id) ;  setShowCard(true)}} className='text-2xl flex gap-1 items-center rounded-md p-2 hover:bg-gray-300'><span className='text-xs'>{"UPDATE VIRTUAL LINK"}</span><AiOutlineUpload/></button>
-                  )}
+                  <Link to={`/event/${event._id}`} className='uppercase px-3 py-1 '>HOST</Link>
                   <button className='text-2xl'><AiOutlineEdit/></button>
                   <button onClick={() => {setShowDeleteCard(true) ,  setSelectedEventId(event._id)}} className='text-2xl'><AiOutlineDelete/></button>
               </div>

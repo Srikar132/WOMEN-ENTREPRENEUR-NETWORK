@@ -78,11 +78,11 @@ function Navbar() {
                                 {index == section && window.innerWidth >= 1280 && 
                                 <motion.div
                                     ref={boxRef}
-                                    className=" xl:absolute z-50 rounded-md xl:block border border-gray-300  xl:left-[-50%] xl:top-[115%] bg-white xl:shadow-2xl px-2 py-2 xl:w-[200%] ">
+                                    className=" xl:absolute z-50 pointer-events-auto rounded-md xl:block border border-gray-300  xl:left-[-50%] xl:top-[115%] bg-white xl:shadow-2xl px-2 py-2 xl:w-[200%] ">
                                         <ul className="flex flex-col items-center w-full pt-2 ">
                                             {navItems[key].map((obj , index ) => {
                                                 return (
-                                                    <Link key={obj.path} to={`${obj.path}`} className="px-3 w-full hover:bg-gray-100 py-2 text-xs flex items-center justify-between">  <span>{obj.name}</span>  </Link>
+                                                    <Link key={obj.path} to={`${obj.path}`} className="px-3 w-full pointer-events-auto hover:bg-gray-100 py-2 text-xs flex items-center justify-between">  <span>{obj.name}</span>  </Link>
                                                 )
                                             })}
                                         </ul>
