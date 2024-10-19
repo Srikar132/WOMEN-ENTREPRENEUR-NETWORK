@@ -27,7 +27,8 @@ export const navItems = {
         {name : "post articles" , path : "/resource/post-articles"},
     ], 
     "for employees" : [
-        {name : "avaliable jobs" , path : "/job "},
+        {name : "Avaliable Jobs" , path : "/job "},
+        {name : "Create A Job" , path : "/job/create"},
     ],
      "community" : [
         {name : "chat with community" , path : "/chat-community"}

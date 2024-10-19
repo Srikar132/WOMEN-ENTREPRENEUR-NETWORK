@@ -31,6 +31,8 @@ import ProfileSetup from './pages/ProfileSetup';
 import Profile from './pages/Profile';
 import YourResource from './pages/YourResource';
 import EventPage from './pages/EventPage';
+import CreateJob from './pages/CreateJob';
+import GetLocation from './components/GetLocation';
 
 const AuthRoute = ({ children }) => {
   const { userInfo } = useStore();
@@ -82,7 +84,8 @@ function App() {
       <Navbar />
       <Suspense fallback={<>Component loading....</>}>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/loc" element={<GetLocation />} />
+          <Route path="/" element={<Home/>} />
           <Route path="/auth/login" element={<AuthRoute><Login /></AuthRoute>} />
           <Route path="/auth/register" element={<AuthRoute><Register /></AuthRoute>} />
           <Route path="/auth/verify-email" element={<VerifyEmail/>} />
@@ -99,6 +102,7 @@ function App() {
           <Route path="/business/:id" element={<PrivateRoute><BusinessPage /></PrivateRoute> } />
 
           <Route path='/job' element={<JobList/>} />
+          <Route path='/job/create' element={<CreateJob/>} />
           <Route path='/job/:id' element={<JobDetails/>} />
 
           <Route path='/resource/articles' element={<ResourceArticle/>}/>
