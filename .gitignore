@@ -1,0 +1,76 @@
+# ================================
+# Dependencies
+# ================================
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# ================================
+# Environment Variables
+# ================================
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+client/.env
+client/.env.*
+server/.env
+server/.env.*
+
+# ================================
+# Build Output (Vite / React)
+# ================================
+client/dist/
+client/dist-ssr/
+client/.vite/
+
+# ================================
+# Logs
+# ================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ================================
+# OS / Editor
+# ================================
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ================================
+# VS Code
+# ================================
+.vscode/*
+!.vscode/extensions.json
+
+# ================================
+# Uploads (user-generated files)
+# ================================
+server/uploads/profiles/*
+server/uploads/business/*
+server/uploads/resume/*
+!server/uploads/profiles/.gitkeep
+!server/uploads/business/.gitkeep
+!server/uploads/resume/.gitkeep
+
+# ================================
+# Misc
+# ================================
+*.local
+.cache/
+.parcel-cache/
+coverage/
+*.tsbuildinfo
