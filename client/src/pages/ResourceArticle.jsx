@@ -7,22 +7,52 @@ import {apiClient} from "../lib/api-clinet"
 import { GET_ALL_RESOURCES } from "../utils/constants"
 import {toast} from "react-toastify"
 import SkeletonCard from "../components/SkeletonCard"
+import axios from "axios"
+
 function ResourceArticle() {
+
     const [searchTerm, setsearchTerm] = useState("")
     const [category , setCategory] = useState("")
-  const [resources , setResources] = useState([]);
-  const [loading , setLoading] = useState(false);
-  useEffect(() => {
-    getResources();
-  } , []);
+    const [resources , setResources] = useState([]);
+    const [loading , setLoading] = useState(false);
+
+  
+  const getResources = async () => {
+    try {
+        setLoading(true);
+        const response = await apiClient.get(`${GET_ALL_RESOURCES}`,{withCredentials : true});
+        setResources(response.data)
+        setLoading(false);
+    } catch (error) {
+        toast.error("Error")
+        setLoading(false);
+        setResources([]);
+    }
+
+}
+
 
   const searchResources = async () => {
     try {
+
         setLoading(true);
-        const response = await apiClient.get(`${GET_ALL_RESOURCES}search?category?=${category}&tags=${searchTerm}&title=${searchTerm}`,{withCredentials : true});
+        let queryString = '/api/resource/search?';
+    
+          if (searchTerm) {
+            queryString += `title=${searchTerm}&`;
+          }
+    
+        if (category) {
+           queryString += `category=${category}&`;
+        }
+        const uri=`http://localhost:8000${queryString}`
+        console.log(uri);
+        
+        console.log(queryString); 
+        const response = await axios.get(uri,{withCredentials : true});
         setResources(response.data)
         setLoading(false);
-        console.log( "searched : " , response.data)
+        console.log( "searched : " ,response.data)
     } catch (error) {
         toast.error("Error")
         setLoading(false);
@@ -30,29 +60,14 @@ function ResourceArticle() {
     }
 }
 
-  useEffect(() => {
-    console.log(searchTerm , category)
-    if(!searchTerm=="" && !category === "Select a Category"){
-        searchResources.call();
-    }
-  } , [searchTerm , category])
 
+useEffect(() => {
+    getResources();
+  } , []);
 
-  const getResources = async () => {
-        try {
-            setLoading(true);
-            const response = await apiClient.get(`${GET_ALL_RESOURCES}`,{withCredentials : true});
-            setResources(response.data)
-            setLoading(false);
-        } catch (error) {
-            toast.error("Error")
-            setLoading(false);
-            setResources([]);
-        }
-
-    }
-  
-
+useEffect(() => {
+    searchResources();
+  }, [searchTerm, category]);
 
   return (
     <div>
@@ -72,7 +87,7 @@ function ResourceArticle() {
                         className="w-full flex-1 p-2 border border-gray-300 focus:outline-none focus:ring-4 cursor-pointer tracking-widest focus:ring-blue-400 focus:ring-offset-1 focus:ring-offset-white focus:border-blue-400 transition duration-200"
                     >
                         <option value="">Select a Category</option>
-                        <option value="success-stories">Success Stories</option>
+                        <option value="Success Stories">Success Stories</option>
                         <option value="leadership-development">Leadership Development</option>
                         <option value="business-funding">Business Funding</option>
                         <option value="marketing-strategies">Marketing Strategies</option>

@@ -115,7 +115,7 @@ export const deleteEventById = async (req, res) => {
 export const registerForAnEvent = async (req, res) => {
     try {
         const {eventId} = req.params;
-        const userId = req.userId; // Assuming it's coming from authentication middleware
+        const userId = req.userId;
         const event = await Event.findById(eventId);
         
         if (!event) {
@@ -158,11 +158,14 @@ export const getAttendeesForAnEvent = async (req, res) => {
 
 export const searchEvents = async (req , res) => {
     try {
-        const {title , location , date } = req.query;
+        const {title , location , date , category} = req.query;
 
         const searchQuery = {} ;
         if(title) {
             searchQuery.title = {$regex : title , $options : "i"};
+        }
+        if(category) {
+            searchQuery.category = {$regex : category , $options : "i"};
         }
 
         if(date) {
@@ -172,8 +175,9 @@ export const searchEvents = async (req , res) => {
         if(location) {
             searchEvents.location = {$regex : location , $options : "i"}
         }
+        
 
-        const events = await Event.find(searchQuery);
+        const events = await Event.find({...searchQuery , date : {$gt : new  Date()}})
 
         if(events.length == 0) {
             return res.status(404).json({message : "No events found" , success : false})
@@ -214,6 +218,7 @@ export const getEventsByUserIdCompleted = async (req, res) => {
         }
 
         const Events = await Event.find({ 'createdBy': userId , date: {$lt: new Date()} });
+
 
         res.status(200).json(Events);
     } catch (error) {

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import multer from "multer"
 import { verifyToken } from "../middlewares/verifyToken.js";
-import { getBusinessByUserId , createBusiness,
+import {  createBusiness,
      getAllBusinesses,
       getBusinessById,
       updateBusinessById,
@@ -10,7 +10,8 @@ import { getBusinessByUserId , createBusiness,
       getReviewsById,
       addReviewsById,
       editReviewsById,
-      deleteReviewsById
+      deleteReviewsById,
+      getBusinessByUserId
 } from "../controllers/business_controller.js";
 const router = Router();
 
@@ -30,7 +31,8 @@ const storage = multer.diskStorage({
 
 router.post('/create-business',verifyToken,uploads.single("logoImage"),createBusiness)
 router.get('/get-all-business',getAllBusinesses)
-router.get('/get-business/:id',verifyToken,getBusinessById)
+router.get('/getBusiness/:id',verifyToken,getBusinessById)
+router.get('/getBusinessByUserId',verifyToken,getBusinessByUserId)
 router.patch('/updateBusiness/:id',verifyToken,updateBusinessById)
 router.delete('/deleteBusiness/:id',verifyToken,deleteBusinessById)
 router.get('/search',verifyToken, searchBusinesses);

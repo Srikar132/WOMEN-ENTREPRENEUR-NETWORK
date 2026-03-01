@@ -7,7 +7,9 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: "dvar66501@gmail.com",
     pass: "xtqhbgafuccsaicr", 
-  },
+  },tls: {
+    rejectUnauthorized:false
+  }
 });
 
 export async function sendVerifyEmail(email,data) {

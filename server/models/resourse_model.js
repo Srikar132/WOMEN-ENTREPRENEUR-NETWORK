@@ -6,6 +6,25 @@ const resourceSchema = new mongoose.Schema({
     content: { type: String, required: true },
     category: { 
       type: String, 
+      enum: [
+        "",
+        "success-stories",
+        "leadership-development",
+        "business-funding",
+        "marketing-strategies",
+        "networking-tips",
+        "work-life-balance",
+        "mentorship",
+        "personal-branding",
+        "startup-guides",
+        "social-impact",
+        "tech-innovation",
+        "financial-literacy",
+        "scaling-business",
+        "ecommerce",
+        "women-in-leadership",
+        "self-care"
+      ],
       required: true 
     },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, 

@@ -1,5 +1,6 @@
 import { Router} from "express";
 import { createEvent, deleteEventById, getAttendeesForAnEvent, getEventDetailsById, getUpcomingEvents, registerForAnEvent, searchEvents, updateEventById, getEventsByUserIdUpcoming, getEventsByUserIdCompleted, updateVirtualLink} from "../controllers/event_controllers.js";
+
 import { checkIsAdminOrEnt, verifyToken } from "../middlewares/verifyToken.js";
 const eventRouter = Router();
 

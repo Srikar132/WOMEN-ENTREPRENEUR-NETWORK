@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { GET_ALL_JOBS } from "../utils/constants";
 import { toast } from "react-toastify";
 import { AiOutlineSearch, AiOutlineArrowRight } from 'react-icons/ai';
-import { apiClient } from '../lib/api-clinet';
+import { apiClient } from '../lib/api-clinet'; // Make sure apiClient is set up correctly
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { GET_ALL_JOBS } from "../utils/constants";
 
 const JobList = () => {
   const [jobs, setJobs] = useState([]);
@@ -12,7 +13,44 @@ const JobList = () => {
   const [category, setCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const getJobs = async () => {
+  const [location, setLocation] = useState(null);
+  const [city, setCity] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // getAllJobs()
+    const fetchLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            const { latitude, longitude } = position.coords;
+            setLocation({ lat: latitude, lng: longitude });
+
+            try {
+              const response = await axios.get(
+                `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=e1380dc6169547da989fae606a5e1362`
+              );
+              
+              const fetchedCity = response.data.results[0]?.components.state_district;
+              setCity(fetchedCity);
+              
+            } catch (error) {
+              setError("Unable to retrieve city data.");
+            }
+          },
+          (err) => {
+            setError(err.message);
+          }
+        );
+      } else {
+        setError("Geolocation is not supported by this browser.");
+      }
+    };
+
+    fetchLocation();
+  }, []);
+
+  const getAllJobs = async () => {
     try {
       const response = await apiClient.get(GET_ALL_JOBS, { withCredentials: true });
       setJobs(response.data.jobs);
@@ -24,11 +62,40 @@ const JobList = () => {
     }
   };
 
-  useEffect(() => {
-    getJobs();
-  }, []);
 
-  const filteredJobs = jobs.filter((job) => {
+// useEffect(() => {
+//   if(city)
+//     getJobsbyLoc()
+// }, [city])
+
+  
+useEffect(() => {
+ getAllJobs()
+  }
+, [])
+
+
+  const getJobsbyLoc = async () => {
+    if (!city) return; 
+
+    console.log("Fetching jobs for city:", city);
+
+    try {
+      console.log("Fetching jobs for city:", city);
+      const response = await axios.get(`http://localhost:8000/api/job/get-jobs/${city}`, { withCredentials: true });
+      console.log("This is",response.data);
+      setJobs(response.data);
+    } catch (error) {
+      toast.error("Failed to load jobs. Please try again later.");
+      setJobs([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  
+
+  const filteredJobs = jobs?.filter((job) => {
     return (
       (!category || job.category.toLowerCase().includes(category.toLowerCase())) &&
       (!searchTerm || job.title.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -70,7 +137,6 @@ const JobList = () => {
               <option value="success-stories">Success Stories</option>
               <option value="leadership-development">Leadership Development</option>
               <option value="business-funding">Business Funding</option>
-              {/* Other categories */}
             </select>
           </div>
 
@@ -91,9 +157,16 @@ const JobList = () => {
 
       <div className="flex flex-col items-center min-h-screen py-10 bg-gray-100">
         <div className="w-11/12 p-6 bg-white rounded-lg shadow-lg md:w-3/4 lg:w-1/2">
-          <h1 className="mb-6 text-2xl font-semibold text-center">Urgently Hiring</h1>
+          <h1 className="mb-6 text-3xl font-semibold text-center">Urgently Hiring</h1>
+          <div className="mb-6 text-center">
+            <button 
+              className="px-4 py-2 font-sans text-xl font-semibold text-blue-600 transition-all duration-300 ease-in-out border-2 border-blue-600 rounded-lg cursor-pointer hover:bg-blue-600 hover:text-white" 
+              onClick={getJobsbyLoc}>
+              Get Jobs Near Me
+            </button>
+            </div>
           <div className="space-y-4">
-            {filteredJobs.length > 0 ? (
+            {filteredJobs?.length > 0 ? (
               filteredJobs.map((job) => (
                 <Link to={`/job/${job._id}`} key={job._id}>
                   <div className="flex items-center justify-between p-4 transition-colors duration-200 rounded-lg shadow bg-gray-50 hover:bg-gray-200">

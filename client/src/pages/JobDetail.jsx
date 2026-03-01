@@ -48,125 +48,169 @@ const JobApplicationPage = () => {
   };
 
   if (loading) {
-    return <div>Loading job details...</div>;
+    return <div>Fetching job details...</div>;
   }
 
   return (
-    <div className="container p-4 mx-auto">
-      <div className="job-details">
-        <h1 className="text-2xl font-bold">{job?.title}</h1>
-        <p className="font-bold">{job?.category}</p>
-        <p>{job?.description}</p>
+    <div className="container max-w-4xl p-8 mx-auto bg-white rounded-lg shadow-lg">
+  {/* Job Details Section */}
+  
+  {/* Job Details Section */}
+  <div className="container max-w-3xl p-6 mx-auto bg-white rounded-lg shadow-lg">
+  {/* Job Title and Category */}
+  <div className="flex flex-col items-start space-y-2">
+    <h1 className="text-4xl font-semibold text-gray-800">{job?.title}</h1>
+    <p className="text-xl font-medium text-blue-500">{job?.category}</p>
+  </div>
 
-        <h2 className="mt-4 text-xl font-semibold">About the Employer:</h2>
-        <div className="rounded-full h-32 w-32 overflow-hidden">
-             <img src={`${HOST}/${job?.employer?.profileImage}`} className="object-cover" alt="" />
-          </div> 
-        <ul className="ml-5 list-disc">
-          <li>Name: {job?.employer?.name}</li>
-          <li>Email: {job?.employer?.email}</li>
-          <li>Mobile: {job?.employer?.contactInfo?.phone}</li>
-        </ul>
+  {/* Job Description */}
+  <div className="mt-4">
+    <p className="text-lg text-gray-700">{job?.description}</p>
+  </div>
 
-        <h2 className="mt-4 text-xl font-semibold">Salary:</h2>
-        <p>{job?.salary}</p>
-
-        <h2 className="mt-4 text-xl font-semibold">Location:</h2>
-        <p>{job?.location}</p>
-      </div>
-
-      <div className="mt-10">
-        <h2 className="text-xl font-bold">Apply for this Job</h2>
-        <form onSubmit={handleSubmit} className="mt-5">
-
-          {/* Title Input */}
-          <div className="mb-4">
-            <label htmlFor="title" className="block text-gray-700">Title</label>
-            <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-              placeholder="Job Title"
-              required
-            />
-          </div>
-
-          {/* Description Input */}
-          <div className="mb-4">
-            <label htmlFor="description" className="block text-gray-700">Description</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-              placeholder="Job Description"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="category" className="block text-gray-700">Category</label>
-            <input
-              type="text"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-              placeholder="Job Category"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="salary" className="block text-gray-700">Salary</label>
-            <input
-              type="number"
-              name="salary"
-              value={formData.salary}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-              placeholder="Salary"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="location" className="block text-gray-700">Location</label>
-            <input
-              type="text"
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-              placeholder="Job Location"
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="employmentType" className="block text-gray-700">Employment Type</label>
-            <select
-              name="employmentType"
-              value={formData.employmentType}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-              required
-            >
-              <option value="">Select Employment Type</option>
-              <option value="full-time">Full-Time</option>
-              <option value="part-time">Part-Time</option>
-              <option value="freelance">Freelance</option>
-            </select>
-          </div>
-
-          <button type="submit" className="px-4 py-2 text-white bg-blue-500 rounded-lg">
-            Submit
-          </button>
-        </form>
-      </div>
+  {/* Employer Section */}
+  <div className="mt-6">
+    <h2 className="text-2xl font-semibold text-gray-800">About the Employer:</h2>
+    <div className="flex items-center mt-4">
+      <img
+        src={`${HOST}/${job?.employer?.profileImage}`}
+        alt="Employer"
+        className="w-24 h-24 rounded-full shadow-lg"
+      />
+      <ul className="ml-6 space-y-1">
+        <li className="font-medium text-gray-800">Name: {job?.employer?.name}</li>
+        <li className="font-medium text-gray-800">Email: {job?.employer?.email}</li>
+        <li className="font-medium text-gray-800">Mobile: {job?.employer?.contactInfo?.phone}</li>
+      </ul>
     </div>
+  </div>
+
+  {/* Salary Section */}
+  <div className="mt-6">
+    <h2 className="text-2xl font-semibold text-gray-800">Salary: {job?.salary}</h2>
+  </div>
+
+  {/* Location Section */}
+  <div className="mt-6">
+    <h2 className="text-2xl font-normal text-black">Location: {job?.city}</h2>
+</div>
+
+</div>
+
+
+  {/* Apply Section */}
+  <div className="mt-10">
+    <h2 className="ml-32 text-3xl text-normal blue-600 font-">Apply for this Job</h2>
+    <form onSubmit={handleSubmit} className="max-w-xl mx-auto mt-6 space-y-6">
+      {/* Title Input */}
+      <div>
+        <label htmlFor="title" className="block font-medium text-left text-gray-700">
+          Job Title
+        </label>
+        <input
+          type="text"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Job Title"
+          required
+        />
+      </div>
+
+      {/* Description Input */}
+      <div>
+        <label htmlFor="description" className="block font-medium text-left text-gray-700">
+          Job Description
+        </label>
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Job Description"
+          required
+        />
+      </div>
+
+      {/* Category Input */}
+      <div>
+        <label htmlFor="category" className="block font-medium text-left text-gray-700">
+          Category
+        </label>
+        <input
+          type="text"
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Job Category"
+          required
+        />
+      </div>
+
+      {/* Salary Input */}
+      <div>
+        <label htmlFor="salary" className="block font-medium text-left text-gray-700">
+          Salary
+        </label>
+        <input
+          type="number"
+          name="salary"
+          value={formData.salary}
+          onChange={handleChange}
+          className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Salary"
+          required
+        />
+      </div>
+
+      {/* Location Input */}
+      <div>
+        <label htmlFor="location" className="block font-medium text-left text-gray-700">
+          Location
+        </label>
+        <input
+          type="text"
+          name="location"
+          value={formData.location}
+          onChange={handleChange}
+          className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          placeholder="Job Location"
+          required
+        />
+      </div>
+
+      {/* Employment Type Dropdown */}
+      <div>
+        <label htmlFor="employmentType" className="block font-medium text-left text-gray-700">
+          Employment Type
+        </label>
+        <select
+          name="employmentType"
+          value={formData.employmentType}
+          onChange={handleChange}
+          className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          required
+        >
+          <option value="">Select Employment Type</option>
+          <option value="full-time">Full-Time</option>
+          <option value="part-time">Part-Time</option>
+          <option value="freelance">Freelance</option>
+        </select>
+      </div>
+
+      {/* Submit Button */}
+      <button
+        type="submit"
+        className="w-full px-4 py-3 font-semibold text-white transition duration-300 bg-blue-600 rounded-lg shadow-md hover:bg-blue-700"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
+
   );
 };
 
